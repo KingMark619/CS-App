@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "676690535391",
+    "project_id": "congo-sante-51130",
+    "storage_bucket": "congo-sante-51130.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676690535391:android:3a8cd1fb39fef0a6f39a6a",
+        "android_client_info": {
+          "package_name": "com.kingmark6.congosante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676690535391-90b9r53toum44cjpi3ddl6gbevc63igt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhlGHogeMSl0vpeSbp9aN7Z9tm_YnRX4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676690535391-90b9r53toum44cjpi3ddl6gbevc63igt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "676690535391-4djk9iq708qig91oktkadjjo8mshfk3f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kingmark6.congosante"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
