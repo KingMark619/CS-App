@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {getAuth} from 'firebase/auth'
+import HospitalCard from '../components/HospitalCard';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -24,6 +25,7 @@ export default function Home({navigation}) {
         }
      },[])
 
+     // Main view bellow
     return (
         <ScrollView style={{backgroundColor:'white'}}>
             {/* username block */}
@@ -86,7 +88,7 @@ export default function Home({navigation}) {
                     }}
                     onPress={() => navigation.navigate('Log')}
                     >
-                        <Text style={{color:'white',fontSize:18, fontWeight:'bold'}}>Book appointment</Text>
+                        <Text style={{color:'white',fontSize:18, fontWeight:'bold'}}>phone check</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -105,6 +107,19 @@ export default function Home({navigation}) {
                     value={searchInput}
                     placeholder="Search symptoms"
                 />
+            </View>
+            {/* Nearby hospitals */}
+            <View style={{justifyContent: 'center', alignItems: 'center', marginBottom:20}}>
+                <Text style={{
+                    fontSize:18, 
+                    fontWeight:'bold', 
+                    alignSelf:'flex-start', 
+                    paddingLeft:10,
+                    marginBottom:10,
+                    }}>Hospitals near you  </Text>
+
+                <HospitalCard name='Hopital General de Mwangaji' department='Pediatry, Maternity' address='2.2'/>
+                <HospitalCard name='Hopital Gecamines' department='Surgery, Cardiolody' address='4.2' onPress={()=>navigation.navigate('Chat')}/>
             </View>
             {/* Learn more / info blog */}
             <View style={{justifyContent: 'center', alignItems: 'center', marginBottom:20}}>

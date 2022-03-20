@@ -83,6 +83,7 @@ export default function Login({navigation}) {
             const userData = signedInUser?.providerData[0];
             const uid = signedInUser?.uid;
             console.log(userData)
+            alert('Login successful')
             // navigation.replace('Home',{email})
             // ...
           })

@@ -13,7 +13,7 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-fi
 import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import {app, db} from '../firebase'
-
+// problem , i get verification code but it wont work. 
 try {
   initializeApp({
     apiKey: "AIzaSyBYcuO-bQQuYXaZErQEjbjjdvdeJmSjOqM",
