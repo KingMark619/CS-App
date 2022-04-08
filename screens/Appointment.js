@@ -173,7 +173,7 @@ export default function Appointment({navigation}) {
                         }}
                     />
                     <Text style={{fontSize:15, fontWeight:'500'}}>Book an appointment with a doctor near you, save time forms and waiting room</Text>
-                    <TouchableOpacity style={{
+                    <TouchableOpacity onPress={() => navigation.navigate('Schedule')} style={{
                         width:screenWidth*0.35,
                         height:40,
                         padding:10,

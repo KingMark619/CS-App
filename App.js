@@ -23,6 +23,7 @@ import {
   Log,
   Search,
   DoctorProfile,
+  Schedule,
   Chat} from './screens/Index'
 
 import { Feather } from '@expo/vector-icons';
@@ -31,26 +32,6 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-
-const email = 'hello@idjgyg.com'
-  const password = 'blaueeh'
-
-const handleSignUp = () => {
-  const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user)
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-  console.log('email, password')
-}
 export default function App() {
   function Hom() {
     return (
@@ -119,6 +100,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Log" component={Log} />
           <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
+          <Stack.Screen name="Schedule" component={Schedule}/>
       </Stack.Navigator> 
     </NavigationContainer> 
     </Provider>  

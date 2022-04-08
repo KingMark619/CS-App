@@ -19,7 +19,8 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info-4.plist",
-      "bundleIdentifier": "com.kingmark6.congosante"
+      "bundleIdentifier": "com.kingmark6.congosante",
+      
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +28,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.kingmark6.congosante",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
     },
     "web": {
       "favicon": "./assets/favicon.png"

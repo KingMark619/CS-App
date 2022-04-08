@@ -5,9 +5,12 @@ import Login from "./Login";
 import SignUp from "./SignUp"
 import Messages from "./Messages";
 import Onboarding from "./Onboarding"
-import Search from "./Search"
+import Search from "./Search";
 import DoctorProfile from "./DoctorProfile";
-import Log from "./Log"
+import Log from "./Log";
+import Schedule from "./Schedule";
+
+Schedule
 
 export {
     Appointment,
@@ -20,4 +23,5 @@ export {
     Search,
     DoctorProfile,
     Log,
+    Schedule
 }

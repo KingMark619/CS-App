@@ -7,48 +7,14 @@ import {
     ScrollView,
     StyleSheet,
     Button,
-    Platform,
     Dimensions, } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DoctorList } from '../dummyData'
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
 
-async function getDefaultCalendarSource() {
-    const defaultCalendar = await Calendar.getDefaultCalendarAsync();
-    return defaultCalendar.source;
-  }
-  
-  async function createCalendar() {
-    const defaultCalendarSource =
-      Platform.OS === 'ios'
-        ? await getDefaultCalendarSource()
-        : { isLocalAccount: true, name: 'Expo Calendar' };
-    const newCalendarID = await Calendar.createCalendarAsync({
-      title: 'Expo Calendar',
-      color: 'blue',
-      entityType: Calendar.EntityTypes.EVENT,
-      sourceId: defaultCalendarSource.id,
-      source: defaultCalendarSource,
-      name: 'internalCalendarName',
-      ownerAccount: 'personal',
-      accessLevel: Calendar.CalendarAccessLevel.OWNER,
-    });
-    console.log(`Your new calendar ID is: ${newCalendarID}`);
-  }
 
 export default function DoctorProfile({navigation}) {
    
-    useEffect(() => {
-        (async () => {
-          const { status } = await Calendar.requestCalendarPermissionsAsync();
-          if (status === 'granted') {
-            const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
-            console.log('Here are all your calendars:');
-            console.log({ calendars });
-          }
-        })();
-      }, []);
-
   return (
     <ScrollView style={{
         backgroundColor:'white',
@@ -146,22 +112,23 @@ export default function DoctorProfile({navigation}) {
         <View style={{marginBottom:20}}>
             <Text style={{fontSize:25, fontWeight:'600',color:'black'}}>Schedule</Text>
             {/* insert calendar */}
-            <Text>Calendar Module Example</Text>
-            <Button title="Create a new calendar" onPress={createCalendar} />
         </View>
         {/* Appointment */}
         <View>
-            <TouchableOpacity style={{
+            <TouchableOpacity onPress={()=>navigation.navigate('Schedule')} style={{
                         borderRadius:8,
                         backgroundColor: '#4368F6',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        height:50
+                        alignSelf:'center',
+                        height:40, 
+                        width:200,
                     }}
                     >
-                        <Text style={{color:'white',fontSize:18, fontWeight:'bold'}}>Appointment</Text>
+                        <Text style={{color:'white',fontSize:15, fontWeight:'bold'}}>Appointment</Text>
             </TouchableOpacity>
         </View>
+        
     </ScrollView>
   )
 }

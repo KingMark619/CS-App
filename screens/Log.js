@@ -7,7 +7,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  Platform,
+  
 } from 'react-native';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import { initializeApp, getApp } from 'firebase/app';
