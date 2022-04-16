@@ -7,7 +7,9 @@ import {
     Dimensions, } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DoctorList } from '../dummyData'
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
+import Constant from '../Constant';
+
 
 const screenWidth = Dimensions.get('window').width
 
@@ -16,8 +18,7 @@ const AppointmentCard = ({ appointment}) => {
         width:screenWidth*0.9,
         height:80,
         padding:10,
-        borderBottomWidth:1,
-        borderBottomColor:'lightgray',
+      ...Constant.border,
         flexDirection:'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -37,8 +38,78 @@ const AppointmentCard = ({ appointment}) => {
             <Text style={{fontSize:28, flex:1,fontWeight:'500', color:'gray',textAlign:'right'}}> : </Text>
     </View>
 }
-
-
+const AppointmentListCard = ({date, time, name, number,department}) => {
+    return (
+        <View style={{
+            width:'90%',
+            height:100,
+            flexDirection: 'row',
+            justifyContent:'space-between',
+            alignItems: 'center',
+        }}>
+            {/* date */}
+            <View style={{
+                width:70,
+                height:70,
+                ...Constant.radius2,
+                ...Constant.border,
+                ...Constant.padding,
+                backgroundColor: '#FFD667',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <Text style={{...Constant.h1}}>27</Text>
+                <Text style={{...Constant.h5}}>October</Text>
+            </View>
+            {/* name and time */}
+            <View style={{
+                justifyContent: 'space-between',
+                alignItems: 'start',
+                flexDirection: 'column',
+                
+            }}>
+                <Text style={{...Constant.h3}}>Medicine Doctor</Text>
+                <Text style={{...Constant.h4, color:'gray'}}>11:20 AM</Text>
+            </View>
+            {/* number */}
+            
+            <TouchableOpacity style={{
+                width:45,
+                height:45,
+                padding:8,
+                borderRadius:12,
+                backgroundColor:'#f7f7f7',
+                justifyContent: 'center',
+                alignItems: 'center'}}>
+                <FontAwesome name="phone" size={24} color="#FFD667" />
+            </TouchableOpacity>
+            
+        </View>
+    )
+}
+const Calendar = () => {
+    // get todays date on useEffect,
+    const date = new Date();
+    console.log(date.getMonth()+1)
+    return(
+        <View style={{
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            flexDirection: 'column',
+        }}>
+            <Text style={{...Constant.h2}}>Upcoming</Text>
+            {/* <Text style={{...Constant.h4,}}>-- No appointments --</Text> */}
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingLeft:10
+            }}>
+                <AppointmentListCard/>
+                <AppointmentListCard/>
+            </View>
+        </View>
+    )
+}
 
 export default function Appointment({navigation}) {
 
@@ -47,25 +118,41 @@ export default function Appointment({navigation}) {
 
     useEffect(() => {
         // load appointment and doctors nearby
+        Calendar()
     },[])
 
     const DoctorCard = ({name, specialty, profile, emoji,}) => {
         return(
             <TouchableOpacity style={{
                 backgroundColor:'white',
-                height:80,
+                height:120,
                 width:screenWidth*0.9,
-                padding:10,
-                borderRadius:10,
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                borderWidth:1,
-                borderColor:'lightgray',
-                flexDirection: 'row',
-                marginBottom:20
+                ...Constant.border,
+                ...Constant.radius2,
+                paddingRight:20,
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                ...Constant.margin
                 }}
                 onPress={() => navigation.navigate('DoctorProfile')}
                 >
+                    {/* text */}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingTop:10,
+                    }}>
+                    <View style={{ 
+                        marginLeft:25, 
+                        flexDirection:'row',
+                        justifyContent: 'space-between',
+                        }}>
+                        <View>
+                            <Text style={{...Constant.h3}}>Dr {name}</Text>
+                            <Text style={{...Constant.h4, color:'gray'}}>{emoji} {specialty}</Text>
+                        </View>
+                    </View>  
                     {/* picture */}
                     <View>
                     <Image 
@@ -74,28 +161,31 @@ export default function Appointment({navigation}) {
                         style={{
                             width:55,
                             height:55,
-                            borderRadius:10
+                            borderRadius:28
                         }}
                     />
+                    </View> 
                     </View>
-                    {/* text */}
-                    <View style={{ 
-                        marginLeft:25, 
+                    {/* second row */}
+                    <View style={{
                         flexDirection:'row',
                         justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingBottom:10,
+                        paddingLeft:10,
+                    }}>
+                        <Text style={{...Constant.h4, color:'#FFD667'}}>Get in touch</Text>
+                        <TouchableOpacity style={{
+                            backgroundColor:'#f7f7f7',
+                            padding:8,
+                            ...Constant.radius2
                         }}>
-                        <View>
-                            <Text style={{fontSize:16, fontWeight:'600'}}>Dr {name}</Text>
-                            <Text style={{fontSize:14, fontWeight:'500', color:'gray'}}>{emoji} {specialty}</Text>
-                        </View>
-                        <View style={{marginLeft:230, position:'absolute'}}>
-                            <Text style={{fontSize:30, fontWeight:'600'}}>:</Text>
-                        </View>
-                    </View>   
+                            <Text style={{...Constant.h4, alignSelf:'center'}}>Appointment</Text>
+                        </TouchableOpacity>
+                    </View>
             </TouchableOpacity>
         )
     }
-
 
     // main return bellow 
     return (
@@ -107,83 +197,53 @@ export default function Appointment({navigation}) {
                 {/* header */}
                 <View style={{marginBottom:20}}>
                 <Text style={{
-                fontSize:25,
-                fontWeight:'700'
-                }}>Book an appointment</Text>
-                </View>
-            {/* appointment type  */}
-            <View style={{
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                flexDirection: 'row',
+                ...Constant.h1,
                 marginBottom:20
-            }}>
+                }}>Let's find your Doctor</Text>
                 <View style={{
-                    justifyContent: 'space-around', 
+                    alignSelf:'center',
+                    width:screenWidth*0.8,
+                    flexDirection:'row',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    width: screenWidth*0.45,
-                    height: screenWidth*0.7,
-                    padding:10,
-                    borderWidth:1,
-                    borderColor:'lightgray',
-                    borderRadius:8,
+                    marginBottom:20
+
                 }}>
                     <Image
-                        source={require('../assets/online-icon.png')}
+                        source={require('../assets/stethoscope.png')}
                         resizeMode='cover'
                         style={{
-                            width:60,
-                            height:60,
-                            borderRadius:50,
-                            borderWidth:1,
-                            borderColor:'#4368F6',
+                            width:40,
+                            height:40,
                         }}
                     />
-                    <Text style={{fontSize:15, fontWeight:'500'}}>Book an online session for a video consultation with a doctor of your choice</Text>
-                    <TouchableOpacity style={{
-                        width:screenWidth*0.35,
-                        height:40,
-                        padding:10,
-                        borderRadius:8,
-                        backgroundColor:'#4368F6'
-                    }}>
-                        <Text style={{fontSize:15, fontWeight:'600',textAlign:'center', color:'white'}}>Book</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* first card above, second card below*/}
-                <View style={{
-                    justifyContent: 'space-around', 
-                    alignItems: 'center',
-                    width: screenWidth*0.45,
-                    height: screenWidth*0.7,
-                    padding:10,
-                    borderWidth:1,
-                    borderColor:'lightgray',
-                    borderRadius:8,
-                }}>
                     <Image
-                        source={require('../assets/offline-icon.png')}
+                        source={require('../assets/heart.png')}
                         resizeMode='cover'
                         style={{
-                            width:60,
-                            height:60,
-                            borderRadius:50,
-                            borderWidth:1,
-                            borderColor:'#4368F6',
+                            width:40,
+                            height:40,
                         }}
                     />
-                    <Text style={{fontSize:15, fontWeight:'500'}}>Book an appointment with a doctor near you, save time forms and waiting room</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Schedule')} style={{
-                        width:screenWidth*0.35,
-                        height:40,
-                        padding:10,
-                        borderRadius:8,
-                        backgroundColor:'#4368F6'
-                    }}>
-                        <Text style={{fontSize:15, fontWeight:'600',textAlign:'center', color:'white'}}>Book</Text>
-                    </TouchableOpacity>
+                    <Image
+                        source={require('../assets/tooth.png')}
+                        resizeMode='cover'
+                        style={{
+                            width:40,
+                            height:40,
+                        }}
+                    />
+                    <Image
+                        source={require('../assets/syringe.png')}
+                        resizeMode='cover'
+                        style={{
+                            width:40,
+                            height:40,
+                        }}
+                    />
                 </View>
-            </View>
+                </View>
+            
 
             {/* search doctors in your area */}
             <View style={{
@@ -192,29 +252,27 @@ export default function Appointment({navigation}) {
                  marginBottom:20}}>
                 <TouchableOpacity onPress={() => navigation.navigate('Search')} 
                     style={{
-                     height:45,
+                     height:50,
                      width:screenWidth * 0.8,
-                     borderRadius:8,
-                     backgroundColor:'#f5f2eb',
+                     ...Constant.radius2,
+                     backgroundColor:'#f7f7f7',
                      padding:10,
                      flexDirection: 'row',
                      justifyContent: 'space-between'
                 }}>
-                    <Text style={{ color:'gray' }}>Search for doctors</Text>
+                    <Text style={{ color:'gray', alignSelf: 'center'}}>Search for doctors</Text>
                     <Feather name="search" size={24} color="#302f2c" />
                 </TouchableOpacity>
             </View>
+            <View>
+                <Calendar/>
+            </View>
             {/* Nearby doctors / hospitals */}
             <Text style={{
-                fontSize:18, 
-                fontWeight:'bold', 
-                alignSelf:'flex-start',
-                paddingLeft:10,
-                marginBottom:10,
-                }}>Doctors near you</Text>
-                {/* <TouchableOpacity onPress={()=> navigation.navigate('DoctorProfile')}>
-                    <Text style={{marginBottom:20}}>Try me eeeeee</Text>
-                </TouchableOpacity> */}
+                ...Constant.h2,
+                ...Constant.margin
+                }}>Available <Text style={{fontSize:6,}}>🟢</Text></Text>
+            
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 {/* doctor card */}
                     {DoctorList.map((doctor, index) =>DoctorCard(doctor,index))}

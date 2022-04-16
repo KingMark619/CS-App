@@ -4,17 +4,17 @@ import {
     View, 
     Text, 
     Image,
-    ScrollView,
-    StyleSheet,
-    Button,
-    Dimensions, } from 'react-native'
+    ScrollView, } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DoctorList } from '../dummyData'
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
-
+import * as Linking from 'expo-linking'
+import Constant from '../Constant'
 
 export default function DoctorProfile({navigation}) {
-   
+   const call = () =>{
+     Linking.openURL('tel:15527971013')
+   }
   return (
     <ScrollView style={{
         backgroundColor:'white',
@@ -38,7 +38,7 @@ export default function DoctorProfile({navigation}) {
             flexDirection:'column',
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: 30
+            ...Constant.margin
         }}>
             <Image 
                 source={require('../assets/doctor.png')}
@@ -50,8 +50,8 @@ export default function DoctorProfile({navigation}) {
                     marginBottom:40,
                 }}
             />
-            <Text style={{fontSize:18, fontWeight:'300', color:'black', marginBottom:10}}>{DoctorList[0].specialty}</Text>
-            <Text style={{fontSize:28, fontWeight:'600', color:'black'}}>Dr. {DoctorList[0].name}</Text>
+            <Text style={{...Constant.h3, color:'gray'}}>{DoctorList[0].specialty}</Text>
+            <Text style={{...Constant.h1,}}>Dr. {DoctorList[0].name}</Text>
         </View>
         {/* actions : messages, call, location */}
         <View style={{
@@ -72,7 +72,7 @@ export default function DoctorProfile({navigation}) {
                 alignItems: 'center'}}>
                 <Entypo name="message" size={24} color="#6EA9FE" />
             </TouchableOpacity>
-            <View style={{
+            <TouchableOpacity onPress={()=>call()} style={{
                 width:55,
                 height:55,
                 padding:15,
@@ -81,7 +81,7 @@ export default function DoctorProfile({navigation}) {
                 justifyContent: 'center',
                 alignItems: 'center'}}>
                 <FontAwesome name="phone" size={24} color="#FFD667" />
-            </View>
+            </TouchableOpacity>
             <View style={{
                 width:55,
                 height:55,
@@ -105,13 +105,12 @@ export default function DoctorProfile({navigation}) {
         </View>
         {/* About  */}
         <View style={{marginBottom:20}}>
-            <Text style={{fontSize:25, fontWeight:'600',color:'black',marginBottom:20}}>About</Text>
-            <Text style={{fontSize:15, fontWeight:'300', color:'gray', lineHeight:20}}>Dr Alan C. Baverman is a cardiologist in Saiont Louis, Missouri and is affiliated with multiple hospitals in the area.</Text>
+            <Text style={{...Constant.h2}}>About</Text>
+            <Text style={{...Constant.h4, color:'gray', lineHeight:20}}>Dr Alan C. Baverman is a cardiologist in Saiont Louis, Missouri and is affiliated with multiple hospitals in the area.</Text>
         </View>
         {/* Calendar */}
         <View style={{marginBottom:20}}>
-            <Text style={{fontSize:25, fontWeight:'600',color:'black'}}>Schedule</Text>
-            {/* insert calendar */}
+            <Text style={{...Constant.h2}}>Schedule</Text>
         </View>
         {/* Appointment */}
         <View>
@@ -125,10 +124,9 @@ export default function DoctorProfile({navigation}) {
                         width:200,
                     }}
                     >
-                        <Text style={{color:'white',fontSize:15, fontWeight:'bold'}}>Appointment</Text>
+                    <Text style={{...Constant.h4, color:'white'}}>Appointment</Text>
             </TouchableOpacity>
         </View>
-        
     </ScrollView>
   )
 }

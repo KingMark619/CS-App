@@ -11,9 +11,11 @@ import {
     StyleSheet
     } from 'react-native'
 import React,{ useState} from 'react'
+import Constant from '../Constant'
 import * as Calendar from 'expo-calendar';
 import CalendarPicker from 'react-native-calendar-picker'
-import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -23,7 +25,6 @@ export default function Schedule({navigation}) {
     const [selectedEndDate, setSelectedEndDate] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 
-    // const [selected, setSelected] = useState([]);
 
     // time array 
     const timeArray = [
@@ -59,7 +60,9 @@ export default function Schedule({navigation}) {
     ]
     const [availableTime, setAvailableTime] = useState(timeArray)
 
+    // popUp screen 
     const PopUp = ({})=> {
+
       return (
         <View style={{
           justifyContent: 'space-around',
@@ -71,7 +74,6 @@ export default function Schedule({navigation}) {
           height: 200,
           backgroundColor: 'white',
           shadowColor: 'black',
-   
           shadowRadius:12,
           shadowOpacity: 1
         }}>
@@ -101,9 +103,7 @@ export default function Schedule({navigation}) {
         item.id === index
           ? { ...item, selected: !item.selected }
           : item
-        
       );
-      console.log()
       setAvailableTime(updatedTimes)
       return updatedTimes
     }
@@ -153,17 +153,16 @@ export default function Schedule({navigation}) {
                     justifyContent: 'center', 
                     alignItems: 'center'
                     }}>
-                    <Text style={{color:'black', fontSize:25, fontWeight:'600'}}>Time</Text>
+                    <Text style={{...Constant.h2}}>Time</Text>
                 </View>
                 <TouchableOpacity onPress={()=> navigation.goBack()} style={{marginTop:-20}}>
                     <Ionicons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
-            </View>
+          </View>
             {/* Calendar bellow */}
     <View style={{
-        borderColor:'lightgray',
-        borderWidth:0.3,
-        borderRadius:10,
+        ...Constant.border,
+        ...Constant.radius2,
         padding:0,
         marginTop:10,
         marginBottom:40
@@ -236,36 +235,11 @@ export default function Schedule({navigation}) {
       onDateChange={onDateChange}
     />
         </View>
-    
-    {/* <View style={{
-          marginTop:10
-      }}>
-      <Text style={{
-          marginTop:10
-      }}>
-        Selected Start Date :
-      </Text>
-      <Text style={{
-          marginTop:10
-      }}>
-        {selectedStartDate ? selectedStartDate.toString() : ''}
-      </Text>
-      <Text style={{
-          marginTop:10
-      }}>
-        Selected End Date :
-      </Text>
-      <Text style={{
-          marginTop:10
-      }}>
-        {selectedEndDate ? selectedEndDate.toString() : ''}
-      </Text>
-    </View> */}
     <View style={{
         justifyContent: 'flex-start', 
-        marginBottom:20
+        ...Constant.margin
         }}>
-        <Text style={{color:'black', fontSize:22, fontWeight:'500'}}>Time</Text>
+        <Text style={{...Constant.h2}}>Time</Text>
     </View>
     {/* Time selection */}
     <View style={{
@@ -273,30 +247,31 @@ export default function Schedule({navigation}) {
       flexDirection: 'row',
       flexWrap:'wrap',
     }}>
-    {availableTime.map((item,index) => <TouchableHighlight
-    key={index} 
-    activeOpacity={0.6}
-  underlayColor="#DDDDDD"
-  onPress={() => selectTime(index)}> 
-    <View style={{ 
-      flex: 1, 
-      height:60,
-      width:screenWidth * 0.35,
-      backgroundColor: item.selected ?'lightblue':'white',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius:12,
-      borderWidth:0.2,
-      borderColor:'lightgray',
-      marginBottom:15
-      }}>
-      <Text style={{
-        color:'black', 
-        fontSize: 15,
-        fontWeight: '500'
-      }}>{item.time} AM</Text>
-    </View>
-    </TouchableHighlight>)}
+      {availableTime.map((item,index) => <TouchableWithoutFeedback
+      key={index} 
+      activeOpacity={0.6}
+      underlayColor="#DDDDDD"
+      onPress={() => selectTime(index)}> 
+      
+       <View style={{ 
+        flex: 1, 
+        height:60,
+        width:screenWidth * 0.35,
+        backgroundColor: item.selected ?'lightblue':'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:12,
+        borderWidth:0.2,
+        borderColor:'lightgray',
+        marginBottom:15
+        }}>
+          <Text style={{
+            color:'black', 
+            fontSize: 15,
+            fontWeight: '500'
+          }}>{item.time} AM</Text>
+       </View>
+    </TouchableWithoutFeedback>)}
     </View>
 {/* modal */}
     <Modal
@@ -310,36 +285,23 @@ export default function Schedule({navigation}) {
           <View style={styles.centeredView}>
           <PopUp/>
           </View>
-        {/* <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
-      </Modal>
-      {/* <TouchableOpacity style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </TouchableOpacity> */}
+    </Modal>
+      
     {/* Appointment */}
     <View>
-            <TouchableOpacity style={{
-                        borderRadius:8,
-                        backgroundColor: '#4368F6',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf:'center',
-                        height:50,
-                        width:200, 
-                    }}
-                    onPress={() => setModalVisible(true)}
-                    >
-                        <Text style={{color:'white',fontSize:16, fontWeight:'500'}}>Appointment</Text>
-            </TouchableOpacity>
-        </View>
+      <TouchableOpacity style={{
+        borderRadius:8,
+        backgroundColor: '#4368F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf:'center',
+        height:50,
+        width:200, 
+        }}
+        onPress={() => setModalVisible(true)}>
+            <Text style={{...Constant.h4, color:'white'}}>Appointment</Text>
+      </TouchableOpacity>
+    </View>
   </ScrollView>
   )
 }

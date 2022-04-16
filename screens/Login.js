@@ -7,32 +7,36 @@ import {
     TextInput, 
     Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup, signInWithCredential} from "firebase/auth";
+import * as Facebook from 'expo-facebook'
 import { Feather, Ionicons, AntDesign } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 // add multiple ways to login . ( facebook, apple, google etc.. )
 
-const loginWithWithSocialMedia = (type)=>{
-    console.log(type)
-    switch(type){
-        case 'facebook':{
-            // facebook login
-        }
-        case 'apple':{
-            // apple login
-        }
-        case 'instagram':{
-            // instagram login
-        }
-        case 'twitter':{
-            // twitter login
-        }
-        default: return false
-    }
-}
 
+async function loginWithFacebook() {
+    await Facebook.initializeAsync('<FACEBOOK_APP_ID>');
+  
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile'],
+    });
+  
+    if (type === 'success') {
+      // Build Firebase credential with the Facebook access token.
+      const facebookAuthProvider = new FacebookAuthProvider();
+      const credential = facebookAuthProvider.credential(token);
+  
+      // Sign in with credential from the Facebook user.
+      signInWithCredential(auth, credential).catch(error => {
+        // Handle Errors here.
+        console.error(error.message);
+      });
+    }
+  }
+
+// facebook login 
 
 export default function Login({navigation}) {
     // Set an initializing state whilst Firebase connects
@@ -54,7 +58,7 @@ export default function Login({navigation}) {
         const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
       }, []);
-
+       
     const checkTextField = () => {
        
         const auth = getAuth();
@@ -207,7 +211,7 @@ export default function Login({navigation}) {
                 marginTop:70,
                 width:screenWidth * 0.8
             }}>
-                <TouchableOpacity onPress={()=>loginWithWithSocialMedia('facebook')} style={{
+                <TouchableOpacity onPress={()=>loginWithFacebook()} style={{
                     borderColor:'lightgray', 
                     borderWidth:1,
                     borderRadius: 50,

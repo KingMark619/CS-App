@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, Dimensions, TextInput, FlatList } from 'react-native'
+import Constant from '../Constant'
+import { 
+    View, 
+    Text, 
+    Image, 
+    Dimensions, 
+    TextInput, 
+    FlatList } from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {getAuth} from 'firebase/auth'
 import HospitalCard from '../components/HospitalCard';
 import { Article } from '../dummyData';
@@ -12,13 +16,15 @@ const screenWidth = Dimensions.get('window').width
 
 export default function Home({navigation}) {
     const auth = getAuth();
-    const user = auth?.currentUser
+    
 
     const [username, setUsername] = useState('Mark') // pull data from user
     const [photoURL, setPhotoURL] = useState('') 
     const [searchInput, setSearchInput] = useState('') // set search bar info
      useEffect(() =>{
         if (auth != null) {
+            const user = auth?.currentUser
+            console.log(`user is: ${user}`)
             // setUsername(user.providerData[0].email)
             // setPhotoURL(user.providerData[0].photoURL)
         }
@@ -28,21 +34,21 @@ export default function Home({navigation}) {
         <View style={{
             width:screenWidth*0.95,
             height: screenWidth*0.3,
-            borderRadius:8,
-            borderWidth:1,
-            borderColor: 'lightgray',
-            padding:10,
             justifyContent: 'space-around',
             overflow:'hidden',
-            marginBottom:20,
+            ...Constant.padding,
+            ...Constant.radius2,
+            ...Constant.border,
+            ...Constant.margin,
+            
         }}>
-            <Text style={{fontSize:15, fontWeight:'400'}}>{item.title}</Text>
-            <Text style={{fontSize:15, fontWeight:'400'}}>{item.subtitle}</Text>
+            <Text style={Constant.h4}>{item.title}</Text>
+            <Text style={Constant.h4}>{item.subtitle}</Text>
         </View>
       );
      // Main view bellow
     return (
-        <ScrollView style={{backgroundColor:'white'}}>
+        <ScrollView style={{ backgroundColor:'white' }}>
             {/* username block */}
             <View style={{ 
                 justifyContent:'space-between', 
@@ -55,90 +61,105 @@ export default function Home({navigation}) {
                 }}>
                 <View style={{
                     justifyContent: 'center', 
-                    flexDirection:'row',
-                    paddingLeft:10
+                    flexDirection:'column',
+                    paddingLeft:15
                     }}>
-                    <Text style={{fontSize:18, fontWeight:'bold'}}>Hello </Text>
-                    <Text style={{fontSize:18, fontWeight:'bold'}}>{username}</Text>
+                    <View style={{
+                    justifyContent: 'center', 
+                    flexDirection:'row',
+                    
+                    }}>
+                        <Text style={Constant.h1}>Hello </Text>
+                        <Text style={Constant.h1}>{username},</Text>
+                    </View>
+                    <View>
+                        <Text style={{...Constant.h4, color:'gray'}}>How are you today?</Text>
+                    </View>
                 </View>
                 <View>
                     <Image
                         source={require('../assets/memoji.jpeg')}
                         resizeMode='cover'
-                        style={{width:60, height:60, borderRadius: 50}}
+                        style={{
+                            width:60,
+                            height:60,
+                            borderRadius: 50 }}
                     />
                 </View>
             </View>
             {/* Search bar for symptoms */}
-            <View style={{justifyContent: 'center',alignItems: 'center', marginBottom:20}}>
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom:20 }}>
                 <TextInput
                     style={{
+                        ...Constant.border,
+                        ...Constant.radius2,
+                        ...Constant.padding,
                         width:screenWidth * 0.9,
-                        borderRadius:8,
-                        borderWidth:1,
-                        borderColor:'lightgray',
-                        height:40,
-                        padding:5,
+                        height:50,
                     }}
-                    onChangeText={setSearchInput}
-                    value={searchInput}
-                    placeholder="Search symptoms"
+                    onChangeText={ setSearchInput }
+                    value={ searchInput }
+                    placeholder="Search health issues ..."
                 />
             </View>
 
             <View style={{
-                padding:10,
-                marginBottom:10,
+                ...Constant.padding,
+                ...Constant.margin
             }}>
-                <Text style={{fontSize:18, fontWeight:'bold'}}>Consult for today </Text>
+                <Text style={Constant.h2}>Consult for today </Text>
             </View>
             {/* Book appointment with doctor*/}
-            <View style={{justifyContent: 'center', alignItems: 'center', marginBottom:20}}>
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                ...Constant.margin}}>
                 <View style={{
                     width:screenWidth*0.92,
-                    height: screenWidth*0.5,
-                    borderRadius:8,
-                    borderWidth:1,
-                    borderColor: 'lightgray',
-                    padding:10,
+                    height: screenWidth*0.4,
                     justifyContent: 'space-around',
+                    ...Constant.border,
+                    ...Constant.radius2,
+                    ...Constant.padding,
                 }}>
-                    <Text style={{fontSize:15, fontWeight:'400'}}>Want to see a doctor?</Text>
-                    <Text style={{fontSize:15, fontWeight:'400'}}>Schedule an appointment.</Text>
-                    <Text style={{fontSize:15, fontWeight:'400'}}>at home or at the hospital</Text>
+                    <Text style={Constant.h4}>Want to see a doctor? Schedule an appointment</Text>
+                    <Text style={Constant.h4}>At home or at the hospital, it's dead easy</Text>
                     <TouchableOpacity style={{
-                        borderRadius:8,
+                        ...Constant.radius2,
+                        ...Constant.border,
                         backgroundColor: '#4368F6',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        alignSelf:"center",
                         height:40,
-                        width:screenWidth * 0.6,
-                        alignSelf:"center",   
+                        width:screenWidth * 0.5,
+                           
                     }}
+                    // navigate to available doctors list 
                     onPress={() => navigation.navigate('DoctorProfile')}
                     >
-                        <Text style={{color:'white',fontSize:18, fontWeight:'500'}}>Book appointment</Text>
+                        <Text style={{...Constant.h4, color:'white',}}>Book appointment</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={{
-                        borderRadius:8,
-                        backgroundColor: '#4368F6',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height:50
-                    }}
-                    onPress={() => navigation.navigate('Log')}
-                    >
-                        <Text style={{color:'white',fontSize:18, fontWeight:'bold'}}>phone check</Text>
-                    </TouchableOpacity> */}
                 </View>
             </View>
             {/* Learn more / info blog */}
             <View style={{
+                ...Constant.padding,
+                ...Constant.margin}}>
+                <Text style={{
+                    ...Constant.h2, 
+                    }}>Learn more  </Text>
+            </View>
+            {/* display articles */}
+            <View style={{
                 justifyContent: 'center',
                 alignItems: 'center', 
-                marginBottom:20,
                 paddingStart:5,
-                paddingEnd:5
+                paddingEnd:5,
+                ...Constant.margin,
                 }}>
                 <FlatList
                     data={Article}
@@ -149,43 +170,19 @@ export default function Home({navigation}) {
                     decelerationRate="fast"
                     snapToInterval={screenWidth}
                 />
-            <TouchableOpacity>
-                
-            <Text style={{
-                fontSize:18, 
-                fontWeight:'bold', 
-                alignSelf:'flex-start', 
-                paddingLeft:10,
-                marginBottom:10,
-                }}>Learn more  </Text>
-                {/* display articles */}
-                {/* {Article.map( (item) => 
-                    <View style={{
-                        width:screenWidth*0.92,
-                        height: screenWidth*0.3,
-                        borderRadius:8,
-                        borderWidth:1,
-                        borderColor: 'lightgray',
-                        padding:10,
-                        justifyContent: 'space-around',
-                        overflow:'hidden',
-                        marginBottom:20
-                    }}>
-                        <Text style={{fontSize:15, fontWeight:'400'}}>{item.title}</Text>
-                        <Text style={{fontSize:15, fontWeight:'400'}}>{item.subtitle}</Text>
-                    </View>
-                )} */}
-                </TouchableOpacity>
             </View>
              {/* Nearby hospitals */}
-             <View style={{justifyContent: 'center', alignItems: 'center', marginBottom:20}}>
+             <View style={{
+                ...Constant.padding,
+                ...Constant.margin}}>
                 <Text style={{
-                    fontSize:18, 
-                    fontWeight:'bold', 
-                    alignSelf:'flex-start', 
-                    paddingLeft:10,
-                    marginBottom:10,
-                    }}>Hospitals near you  </Text>
+                    ...Constant.h2, 
+                    }}>Hospitals near you</Text>
+            </View>
+             <View style={{
+                 justifyContent: 'center',
+                 alignItems: 'center', 
+                 ...Constant.margin}}>
 
                 <HospitalCard name='Hopital General de Mwangaji' department='Pediatry, Maternity' address='2.2'/>
                 <HospitalCard name='Hopital Gecamines' department='Surgery, Cardiolody' address='4.2' onPress={()=>navigation.navigate('Chat')}/>
