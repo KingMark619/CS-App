@@ -55,48 +55,36 @@ export default function Login({navigation}) {
       }
       useEffect(() => {
           const auth = getAuth();
+          console.log(auth)
         const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
       }, []);
        
     const checkTextField = () => {
-       
-        const auth = getAuth();
-        // check email and password
-        // let validEmail = false
-        // let validPassword = false
-        // // regex to check password and email 
-        // const mailFormat = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        // const passwordFormat = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/
-
-        // if(!email.match(mailFormat)){
-		//     alert("This is not a valid email address");
-		//     return validEmail = true;
-		// }
-        // if(!password.match(passwordFormat)){
-        //     alert("Invalid, make sure password has 8-20 characters, a number and a special characters");
-		//     return  validPassword = true;
-        // }
-        // success, check with firebase and connect user 
-      
-            console.log("login in")
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in 
-            const signedInUser = userCredential.user;
-            const userData = signedInUser?.providerData[0];
-            const uid = signedInUser?.uid;
-            console.log(userData)
-            alert('Login successful')
-            // navigation.replace('Home',{email})
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-            console.log(errorMessage)
-          });
+            const auth = getAuth();
+            console.log("login launch")
+            if(email != '' && password != '') {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                    // Signed in 
+                    const signedInUser = userCredential.user;
+                    const userData = signedInUser?.providerData[0];
+                    const uid = signedInUser?.uid;
+                        console.log(userData)
+                        alert('Login successful')
+                    // navigation.replace('Home',{email})
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                    console.log(errorMessage)
+                });
+            } else {
+                alert('Email or password incorrect')
+            }
+        
     }
 
     return (
@@ -153,7 +141,7 @@ export default function Login({navigation}) {
                         padding:10,
                         marginBottom:15
                     }}
-                    placeholder="Enter your email address"
+                    placeholder="Email address"
                     onChangeText={setEmail}
                     value={email}
                 />
@@ -166,7 +154,7 @@ export default function Login({navigation}) {
                         height:50,
                         padding:10,
                     }}
-                    placeholder="Enter your email password"
+                    placeholder="Password"
                     onChangeText={setPassword}
                     value={password}
                 />
@@ -188,7 +176,27 @@ export default function Login({navigation}) {
                         }}>Login</Text>
                 </View>
             </TouchableOpacity>
-            {/* already have an account */}
+
+            <TouchableOpacity onPress={()=>navigation.navigate('Log')}>
+                <View style={{
+                    backgroundColor:'#fff',
+                    width:screenWidth * 0.5,
+                    height:40, 
+                    borderRadius:12,
+                    borderColor:'lightgray',
+                    borderWidth:0.2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop:30,
+                    }}>
+                    <Text style={{
+                        fontSize:15,
+                        fontWeight: '500',
+                        color:"black"
+                        }}>Log in with mobile</Text>
+                </View>
+            </TouchableOpacity>
+            {/* new to app */}
             <TouchableOpacity onPress={()=> navigation.goBack()}
                 style={{
                     marginTop:30,
@@ -204,7 +212,7 @@ export default function Login({navigation}) {
                         }}>New to this app? Sign Up</Text>
             </TouchableOpacity>
             {/* Sign up with social media */}
-            <View style={{
+            {/* <View style={{
                 flexDirection:'row',
                 justifyContent: 'space-around',
                 alignItems: 'center',
@@ -228,7 +236,7 @@ export default function Login({navigation}) {
                 <TouchableOpacity onPress={()=>loginWithWithSocialMedia('apple')} style={{marginTop:-5}}>
                     <AntDesign name="apple1" size={40} color="black" />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             </View>
         </ScrollView>
     )

@@ -25,6 +25,7 @@ export default function Home({navigation}) {
         if (auth != null) {
             const user = auth?.currentUser
             console.log(`user is: ${user}`)
+            console.log(user)
             // setUsername(user.providerData[0].email)
             // setPhotoURL(user.providerData[0].photoURL)
         }

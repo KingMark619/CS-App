@@ -19,6 +19,11 @@ export default StyleSheet.create({
         letterSpacing:0.5,
     },
     h5:{
+        fontSize:10,
+        fontWeight:'500',
+        letterSpacing:0.5,
+    },
+    h6:{
         fontSize:8,
         fontWeight:'500',
         letterSpacing:0.5,
@@ -45,6 +50,12 @@ export default StyleSheet.create({
         borderWidth:0.5,
         borderColor:'lightgray',
 
+    },
+    primaryColor :{
+        color:'#4368F6'
+    },
+    secondaryColor :{
+        color:'#2f68ac'
     }
 })
 

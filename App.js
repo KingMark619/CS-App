@@ -21,10 +21,15 @@ import {
   Messages,
   Onboarding,
   Log,
+  Infos,
   Search,
   DoctorProfile,
   Schedule,
-  Chat} from './screens/Index'
+  Chat,
+  Screen1,
+  Screen2,
+  Screen3
+} from './screens/Index'
 
 import { Feather } from '@expo/vector-icons';
 
@@ -99,8 +104,12 @@ export default function App() {
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Log" component={Log} />
+          <Stack.Screen name="Infos" component={Infos} />
           <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
           <Stack.Screen name="Schedule" component={Schedule}/>
+          <Stack.Screen name="Screen1" component={Screen1}/>
+          <Stack.Screen name="Screen2" component={Screen2}/>
+          <Stack.Screen name="Screen3" component={Screen3}/>
       </Stack.Navigator> 
     </NavigationContainer> 
     </Provider>  

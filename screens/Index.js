@@ -8,9 +8,12 @@ import Onboarding from "./Onboarding"
 import Search from "./Search";
 import DoctorProfile from "./DoctorProfile";
 import Log from "./Log";
+import Infos from "./Infos"
 import Schedule from "./Schedule";
+import Screen1 from "./forms/Screen1";
+import Screen2 from "./forms/Screen2";
+import Screen3 from "./forms/Screen3";
 
-Schedule
 
 export {
     Appointment,
@@ -23,5 +26,9 @@ export {
     Search,
     DoctorProfile,
     Log,
-    Schedule
+    Infos,
+    Schedule,
+    Screen1,
+    Screen2,
+    Screen3
 }

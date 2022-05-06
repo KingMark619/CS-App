@@ -13,31 +13,7 @@ import Constant from '../Constant';
 
 const screenWidth = Dimensions.get('window').width
 
-const AppointmentCard = ({ appointment}) => {
-    <View style={{
-        width:screenWidth*0.9,
-        height:80,
-        padding:10,
-      ...Constant.border,
-        flexDirection:'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    }}>
-        {/* content block */}
-            <Image
-                source={require('../assets/appointment-icon.png')}
-                resizeMode='center'
-                style={{width:30, height:30, borderRadius: 50, flex:0.3}}
-            />
-            {/* text block */}
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start', paddingStart:15}}>
-                <Text style={{fontSize:14, fontWeight:'500'}}>26/03/2022</Text>
-                <Text style={{fontSize:14, fontWeight:'500'}}>Dr Kay'man Gabriel</Text>
-            </View>
-        {/* arrow image */}
-            <Text style={{fontSize:28, flex:1,fontWeight:'500', color:'gray',textAlign:'right'}}> : </Text>
-    </View>
-}
+
 const AppointmentListCard = ({date, time, name, number,department}) => {
     return (
         <View style={{
@@ -59,7 +35,7 @@ const AppointmentListCard = ({date, time, name, number,department}) => {
                 alignItems: 'center',
             }}>
                 <Text style={{...Constant.h1}}>27</Text>
-                <Text style={{...Constant.h5}}>October</Text>
+                <Text style={{...Constant.h6}}>October</Text>
             </View>
             {/* name and time */}
             <View style={{
@@ -193,7 +169,8 @@ export default function Appointment({navigation}) {
             paddingLeft:10, 
             paddingRight:10, 
             backgroundColor:'white',
-            paddingTop:60}}>
+            paddingTop:60,
+            }}>
                 {/* header */}
                 <View style={{marginBottom:20}}>
                 <Text style={{
@@ -277,23 +254,8 @@ export default function Appointment({navigation}) {
                 {/* doctor card */}
                     {DoctorList.map((doctor, index) =>DoctorCard(doctor,index))}
             </View>
-                
-            {/* previous appointments */}
-          
-            <Text style={{
-                fontSize:18, 
-                fontWeight:'bold', 
-                alignSelf:'flex-start',
-                paddingLeft:10,
-                marginBottom:10,
-                }}>Previous appointments</Text>
-
-            <View style={{justifyContent: 'center',alignItems: 'center'}}>
-                {/* card */}
-                {appointments?.map(item => {
-                    <AppointmentCard appointments={item}/>
-                })}
-            </View>
+            {/* margin due to bottom tab bar */}
+            <View style={{marginBottom:60}}></View>
         </ScrollView>
     )
 }

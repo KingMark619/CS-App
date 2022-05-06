@@ -5,10 +5,11 @@ import {
     Image,
     Dimensions,
     TouchableOpacity, 
-    Button} from 'react-native';
+    } from 'react-native';
 import React, { useState, useEffect} from 'react';
 import { getAuth } from 'firebase/auth';
-
+import { initializeApp } from "firebase/app";
+import { app, db } from "../firebase"
 import { 
     getFirestore,
      collection,
@@ -21,13 +22,12 @@ import {
      getDocs, 
      orderBy, 
      limit, } from 'firebase/firestore';
-// import db from "../firebase"
 
-const screenWidth = Dimensions.get('window').width
-const screenHeight = Dimensions.get('window').height
+import Constant from '../Constant';
+import SearchBar from '../components/SearchBar';
 
-import { initializeApp } from "firebase/app";
-import { app, db } from "../firebase"
+const {width, height} = Dimensions.get('window')
+
 
 export default function Messages({navigation,route}) {
     const [messages, setMessages] = useState([])
@@ -38,8 +38,6 @@ export default function Messages({navigation,route}) {
    
     async function getMessages() {
         console.log('calling');
-        console.log(route.params)
-        console.log(navigation)
         
         const result = []
         const items = await getDocs(collection(db, "messages"));
@@ -54,40 +52,43 @@ export default function Messages({navigation,route}) {
         return (
             <TouchableOpacity onPress={() => navigation.navigate('Chat')} style={{
                 flexDirection:'row',
-                justifyContent: 'space-around',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                padding:5,
                 height: 90,
                 width:"100%",
-                borderBottomColor:'lightgray',
-                borderBottomWidth:1
+                ...Constant.padding
             }}>
                 {/* image block */}
                 <Image
                     source={{uri: 'https://placeimg.com/140/140/any'}}
                     resizeMode="cover"
                     style={{
-                        width:50,
-                        height:50,
-                        borderRadius:25,
+                        width:60,
+                        height:60,
+                        borderRadius:30,
+                        marginRight:20
                     }}
                 />
                 {/* text and time block */}
                 <View style={{
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
                     alignItems:'flex-start',
-                    width:'80%'
+                    flex:1
                 }}>
                     <Text style={{
-                        fontSize:18,
-                        color:'#302f2c',
-                        fontWeight:"500",
-                        }}>{message.displayName}</Text> 
+                        ...Constant.h4
+                        }}>{message?.displayName? message.displayName: 'Doctor ZHupar'}</Text> 
                     <Text style={{
-                        fontSize:15,
-                        color:'gray',
-                        fontWeight:"300",
-                        }}>{message.text}</Text>
+                        ...Constant.h4, color:'gray'
+                        }}>{message?.text?message.text:'text here hjedej dhejd'}</Text>
+                </View>
+                {/* time */}
+                <View style={{
+                    justifyContent:'flex-end',
+                    alignItems:'flex-end',
+                    alignSelf:'auto'
+                }}>
+                    <Text style={{...Constant.h5, color:'gray'}}>10:23 AM</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -100,64 +101,60 @@ export default function Messages({navigation,route}) {
                     source={{uri: 'https://placeimg.com/140/140/any'}}
                     resizeMode='cover'
                     style={{
-                        width:50,
-                        height:50,
-                        borderRadius:25,
-                        marginEnd:10
+                        width:60,
+                        height:60,
+                        borderRadius:30,
+                        marginEnd:20
                     }}
                 />
+                {/* display text if doctor online and available */}
+                <Text style={{
+                    fontSize:8,
+                    position:'absolute',
+                    right:25,
+                    }}>🟢</Text>
             </TouchableOpacity>
         )
     }
 
     // main return
   return (
-    <ScrollView style={{backgroundColor:'white'}}>
-        {/* Main view */}
-        <View style={{
-            paddingTop:50, 
-            backgroundColor:'#4368F6'
-            }}>
-        {/* Search bar and profile icons */}
-        <View style={{
-            backgroundColor:'#4368F6',
-            padding:10}}>
+    <ScrollView style={{
+        paddingLeft:10, 
+        paddingRight:10, 
+        backgroundColor:'white',
+        paddingTop:60,}}>
+        <View>
             <Text style={{
-                fontSize:25,
-                fontWeight:'700'
-                }}>Chat with your doctors</Text>
+                ...Constant.h1,
+                marginBottom:20
+                }}>Get in touch</Text>
+            {/* input text field */}
+            <SearchBar navigation={navigation}/>
+            {/* recent chat heads */}
             <ScrollView 
                 horizontal={true}
                 style={{
                     marginTop:25,
                     marginBottom:40,
-                    backgroundColor:'#4368F6'
                 }}> 
-                {/* scroll profiel pics  */}
+                {/* scroll profile pics  */}
                 <View style={{
                     flexDirection:'row',
                     justifyContent: 'space-between',
                     alignItems:'center'
-            }}>
+                }}>
+                    <ChatProfile />
+                    <ChatProfile />
+                    <ChatProfile />
+                    
                 { messages.map((message)=>{
                     <ChatProfile message={message}/>
                 })}
-                
                 </View>
-                
             </ScrollView>
-        </View>
-        {/* View for empty content */}
-        
-        {/* chats */}
-        <View style={{
-            backgroundColor:'white',
-            borderTopLeftRadius:15,
-            borderTopRightRadius:15,
-            marginTop:-25,
-            height:'100%',
-        }}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Appointment')}>
+            {/* hide in case there are messages */}
+            {/* <TouchableOpacity onPress={()=>navigation.navigate('Appointment')}>
             <Text style={{
                 color:'gray', 
                 fontSize:15,
@@ -167,13 +164,15 @@ export default function Messages({navigation,route}) {
                 textDecorationStyle:'solid',
                 textDecorationLine:'underline'
                 }}> Get in touch with your doctor today</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         {/* chat component */} 
+        <ChatComponent />
+        <ChatComponent />
+        <ChatComponent />
                { messages.map((message)=>{
                    <ChatComponent message={message} />
                })}
         </View>
-    </View>    
     </ScrollView>
   );
 }

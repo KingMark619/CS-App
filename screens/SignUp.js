@@ -8,7 +8,7 @@ import {
     Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { getAuth, createUserWithEmailAndPassword, } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 
 import { Feather,AntDesign } from '@expo/vector-icons';
@@ -20,26 +20,25 @@ export default function SignUp({navigation}) {
 
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const [confirmPassword,setConfirmPassword] = useState('')
 
     const checkTextField = () => {
-        console.log('sing up launch')
+        console.log('check text field')
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user)
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ... 
-            console.log(errorMessage)
-          });
-    }
+        if (email != '' && password != '') {
+            if (confirmPassword === password) {
+                navigation.navigate('Infos', {email: email, password: password})
+          }
+          else {
+              alert('Password do not match !')
+          }
+        }
+        // invalid email or password
+        else if (email === '' || password === '') {
+            alert('Invalid email or password')
+        }
+    }     
 
-  
   return (
         <ScrollView style={{ 
             backgroundColor:'white', 
@@ -95,7 +94,7 @@ export default function SignUp({navigation}) {
                         padding:10,
                         marginBottom:15
                     }}
-                    placeholder="Enter your email address"
+                    placeholder="Email address"
                     onChangeText={setEmail}
                     value={email}
                 />
@@ -107,10 +106,24 @@ export default function SignUp({navigation}) {
                         borderBottomWidth:1, 
                         height:50,
                         padding:10,
+                        marginBottom:15
                     }}
-                    placeholder="Enter your email password"
+                    placeholder="Password"
                     onChangeText={setPassword}
                     value={password}
+                />
+                <TextInput
+                    style={{
+                        borderRadius: 12,
+                        width:screenWidth * 0.9,
+                        borderColor:'lightgray',
+                        borderBottomWidth:1,
+                        height:50,
+                        padding:10,
+                    }}
+                    placeholder="Confirm Password"
+                    onChangeText={setConfirmPassword}
+                    value={confirmPassword}
                 />
            
             </View>
@@ -131,6 +144,26 @@ export default function SignUp({navigation}) {
                         }}>Sign Up</Text>
                 </View>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>navigation.navigate('Log')}>
+                <View style={{
+                    backgroundColor:'#fff',
+                    width:screenWidth * 0.5,
+                    height:40, 
+                    borderRadius:12,
+                    borderColor:'lightgray',
+                    borderWidth:0.2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop:30,
+                    }}>
+                    <Text style={{
+                        fontSize:15,
+                        fontWeight: '500',
+                        color:"black"
+                        }}>Sign up with mobile</Text>
+                </View>
+            </TouchableOpacity>
            
             {/* already have an account */}
             <TouchableOpacity onPress={()=>navigation.navigate('Login')}
@@ -149,7 +182,7 @@ export default function SignUp({navigation}) {
                         }}>Already have an account?</Text>
             </TouchableOpacity>
             {/* Sign up with social media */}
-            <View style={{
+            {/* <View style={{
                 flexDirection:'row',
                 justifyContent: 'space-around',
                 alignItems: 'center',
@@ -173,7 +206,7 @@ export default function SignUp({navigation}) {
                 <TouchableOpacity style={{marginTop:-5}}>
                     <AntDesign name="apple1" size={40} color="black" />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             </View>
         </ScrollView>
     )
