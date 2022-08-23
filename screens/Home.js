@@ -11,6 +11,8 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import {getAuth} from 'firebase/auth'
 import HospitalCard from '../components/HospitalCard';
 import { Article } from '../dummyData';
+import Photo from '../assets/memoji.jpeg'
+import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -25,9 +27,9 @@ export default function Home({navigation}) {
         if (auth != null) {
             const user = auth?.currentUser
             console.log(`user is: ${user}`)
-            console.log(user)
-            // setUsername(user.providerData[0].email)
-            // setPhotoURL(user.providerData[0].photoURL)
+            console.log(user?.providerData)
+            setUsername(user?.providerData[0].displayName)
+            setPhotoURL(user?.providerData[0].photoURL)
         }
      },[])
 
@@ -47,6 +49,97 @@ export default function Home({navigation}) {
             <Text style={Constant.h4}>{item.subtitle}</Text>
         </View>
       );
+
+      const Icons = ({item}) => (
+          
+        <TouchableOpacity 
+            style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginEnd:20
+            }}
+        >
+      
+        <View style={{
+                padding:10,
+                borderRadius:30,
+                marginBottom:10,
+                backgroundColor:'lightgray',
+                width:60,
+                height:60,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+            <FontAwesome5 name={item} size={30} color="#4368F6" />
+        </View>
+        <View>
+            <Text style={{
+                color:'gray',
+                fontWeight:'500'
+            }}>{item}</Text>
+        </View>
+        
+    </TouchableOpacity>
+      )
+
+    const AppointmentCard = () => {
+
+        return(
+            <TouchableOpacity style={{
+                 backgroundColor:'#4368F6',
+                 width:screenWidth*0.92,
+                 borderRadius:'12px',
+                 padding:12
+                 }}>
+                {/* first row */}
+                <View style={{
+                    flexDirection:'row',
+                    justifyContent:'flex-start',
+                    alignItems: 'center',
+                    marginBottom:20
+                }}>
+                    <Image
+                        source={{uri: 'https://placeimg.com/140/140/any'}}
+                        resizeMode='cover'
+                        style={{
+                            width:60,
+                            height:60,
+                            borderRadius:30,
+                            marginEnd:20
+                        }}
+                    />
+                    <View style={{
+                        flexDirection:'column',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start'
+                    }}>
+                        <Text style={Constant.h3}>Dr muhammed</Text>
+                        <Text style={{...Constant.h4, ...Constant.gray}}>Dental specialist</Text>
+                    </View>
+                </View>
+                {/* second row */}
+                <View style={{
+                    flexDirection:'row',
+                    justifyContent:'space-around',
+                    alignItems: 'center',
+                    padding: 10,
+                    paddingTop:20,
+                    paddingBottom:20,
+                    borderRadius:8,
+                    backgroundColor:'#99c9f0',
+                    marginBottom:5
+                }}>
+                    <AntDesign name="calendar" size={20} color="white" />
+                    <Text style={{...Constant.h4, 
+                        ...Constant.white}}>Monday, July 29</Text>
+                    <AntDesign name="clockcircleo" size={20} color="white" />
+                    <Text style={{...Constant.h4, 
+                        ...Constant.white}}>11:00 - 12:00 AM</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
      // Main view bellow
     return (
         <ScrollView style={{ backgroundColor:'white' }}>
@@ -57,7 +150,7 @@ export default function Home({navigation}) {
                 width: screenWidth,
                 flexDirection:'row',
                 paddingRight:10,
-                marginBottom:20,
+                marginBottom:40,
                 marginTop:50
                 }}>
                 <View style={{
@@ -71,7 +164,7 @@ export default function Home({navigation}) {
                     
                     }}>
                         <Text style={Constant.h1}>Hello </Text>
-                        <Text style={Constant.h1}>{username},</Text>
+                        <Text style={Constant.h1}>{username}{username?',':''}</Text>
                     </View>
                     <View>
                         <Text style={{...Constant.h4, color:'gray'}}>How are you today?</Text>
@@ -79,7 +172,7 @@ export default function Home({navigation}) {
                 </View>
                 <View>
                     <Image
-                        source={require('../assets/memoji.jpeg')}
+                        source={photoURL? {uri: photoURL} :require('../assets/memoji.jpeg')}
                         resizeMode='cover'
                         style={{
                             width:60,
@@ -92,7 +185,7 @@ export default function Home({navigation}) {
             <View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom:20 }}>
+                marginBottom:40 }}>
                 <TextInput
                     style={{
                         ...Constant.border,
@@ -100,13 +193,27 @@ export default function Home({navigation}) {
                         ...Constant.padding,
                         width:screenWidth * 0.9,
                         height:50,
+                        backgroundColor:'lightgray',
                     }}
                     onChangeText={ setSearchInput }
                     value={ searchInput }
+                    placeholderTextColor="gray"
                     placeholder="Search health issues ..."
                 />
             </View>
 
+            <View style={{
+                flexDirection:'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom:20
+            }}>
+                <Icons item="virus"/>
+                <Icons item="hospital"/>
+                <Icons item="ambulance"/>
+                <Icons item="pills"/>
+            </View>
+            
             <View style={{
                 ...Constant.padding,
                 ...Constant.margin
@@ -115,36 +222,10 @@ export default function Home({navigation}) {
             </View>
             {/* Book appointment with doctor*/}
             <View style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                ...Constant.margin}}>
-                <View style={{
-                    width:screenWidth*0.92,
-                    height: screenWidth*0.4,
-                    justifyContent: 'space-around',
-                    ...Constant.border,
-                    ...Constant.radius2,
-                    ...Constant.padding,
-                }}>
-                    <Text style={Constant.h4}>Want to see a doctor? Schedule an appointment</Text>
-                    <Text style={Constant.h4}>At home or at the hospital, it's dead easy</Text>
-                    <TouchableOpacity style={{
-                        ...Constant.radius2,
-                        ...Constant.border,
-                        backgroundColor: '#4368F6',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf:"center",
-                        height:40,
-                        width:screenWidth * 0.5,
-                           
-                    }}
-                    // navigate to available doctors list 
-                    onPress={() => navigation.navigate('DoctorProfile')}
-                    >
-                        <Text style={{...Constant.h4, color:'white',}}>Book appointment</Text>
-                    </TouchableOpacity>
-                </View>
+                justifyContent:"center",
+                alignItems:"center"
+            }}>
+                <AppointmentCard />
             </View>
             {/* Learn more / info blog */}
             <View style={{
@@ -165,7 +246,7 @@ export default function Home({navigation}) {
                 <FlatList
                     data={Article}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.title}
                     horizontal
                     snapToAlignment="center"
                     decelerationRate="fast"

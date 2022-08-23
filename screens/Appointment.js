@@ -97,9 +97,9 @@ export default function Appointment({navigation}) {
         Calendar()
     },[])
 
-    const DoctorCard = ({name, specialty, profile, emoji,}) => {
+    const DoctorCard = ({name, specialty, profile, emoji,id}) => {
         return(
-            <TouchableOpacity style={{
+            <TouchableOpacity key={id} style={{
                 backgroundColor:'white',
                 height:120,
                 width:screenWidth*0.9,

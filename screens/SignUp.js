@@ -23,7 +23,6 @@ export default function SignUp({navigation}) {
     const [confirmPassword,setConfirmPassword] = useState('')
 
     const checkTextField = () => {
-        console.log('check text field')
         const auth = getAuth();
         if (email != '' && password != '') {
             if (confirmPassword === password) {

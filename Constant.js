@@ -14,7 +14,7 @@ export default StyleSheet.create({
         fontWeight:'500'
     },
     h4 :{
-        fontSize:15,
+        fontSize:14,
         fontWeight:'500',
         letterSpacing:0.5,
     },
@@ -33,6 +33,9 @@ export default StyleSheet.create({
     },
     gray :{
         color:'#f5f2eb'
+    },
+    white:{ 
+        color:'#fff'
     },
     padding :{
         padding:15,

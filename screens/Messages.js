@@ -38,14 +38,17 @@ export default function Messages({navigation,route}) {
    
     async function getMessages() {
         console.log('calling');
-        
         const result = []
-        const items = await getDocs(collection(db, "messages"));
-        items.forEach((doc) => {
-          result.push(doc.data());
-        });
-        console.log(result);
-        setMessages(result);
+        try {
+            const items = await getDocs(collection(db, "Messages"));
+            items.forEach((doc) => {
+                result.push(doc.data());
+              });
+              console.log(result);
+              setMessages(result);
+          } catch(err) {
+            console.log(err); // TypeError: failed to fetch
+          }        
       }    
 
     const ChatComponent = ({message}) => {
@@ -154,22 +157,11 @@ export default function Messages({navigation,route}) {
                 </View>
             </ScrollView>
             {/* hide in case there are messages */}
-            {/* <TouchableOpacity onPress={()=>navigation.navigate('Appointment')}>
-            <Text style={{
-                color:'gray', 
-                fontSize:15,
-                fontWeight:'400',
-                alignSelf: 'center',
-                marginVertical:150,
-                textDecorationStyle:'solid',
-                textDecorationLine:'underline'
-                }}> Get in touch with your doctor today</Text>
-            </TouchableOpacity> */}
+            
         {/* chat component */} 
         <ChatComponent />
-        <ChatComponent />
-        <ChatComponent />
-               { messages.map((message)=>{
+        
+               { messages?.map((message)=>{
                    <ChatComponent message={message} />
                })}
         </View>

@@ -18,7 +18,7 @@ export default function Infos(navigation) {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [sex, setSex] = useState('M')
-    const [phone, setPhone] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
 
     useEffect(() =>{
         setEmail(navigation.route.params.email)
@@ -26,10 +26,9 @@ export default function Infos(navigation) {
     },[])
 
     const SignUp = () => {
-        console.log('signUp launch')
         const auth = getAuth();
                 createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
+                .then(() => {
                   // Signed in 
                   updateProfile(auth.currentUser, {
                     displayName: displayName,
@@ -37,13 +36,12 @@ export default function Infos(navigation) {
                     photoURL: "https://placeimg.com/140/140/any"
                   }).then(() => {
                     // Profile updated!
-                    console.log('profile updated')
-                    console.log(auth.currentUser)
+                    // have success animation 
+                    go()
                   }).catch((error) => {
                     // An error occurred
                     console.log(error)
                   });
-                //   navigation.navigate('Infos')
                 })
                 .catch((error) => {
                   const errorMessage = error.message;
@@ -68,7 +66,12 @@ export default function Infos(navigation) {
         // // success, check with firebase and connect user 
 
 
-    }   
+    }  
+    
+    const go = ()=> {
+        console.log("nav lunch")
+        navigation.navigate('Home')
+    }
   return (
     <View style={{
         paddingLeft:10, 
@@ -136,8 +139,8 @@ export default function Infos(navigation) {
                 }}
                 keyboardType="phone-pad"
                 placeholder="Phone"
-                onChangeText={setPhone}
-                value={phone}
+                onChangeText={setPhoneNumber}
+                value={phoneNumber}
         />
         
       </View>
