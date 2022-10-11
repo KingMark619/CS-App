@@ -7,21 +7,8 @@ import {
     TouchableOpacity, 
     } from 'react-native';
 import React, { useState, useEffect} from 'react';
-import { getAuth } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
 import { app, db } from "../firebase"
-import { 
-    getFirestore,
-     collection,
-     query,
-     where,
-     setDoc, 
-     doc, 
-     addDoc, 
-     getDoc, 
-     getDocs, 
-     orderBy, 
-     limit, } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 import Constant from '../Constant';
 import SearchBar from '../components/SearchBar';
@@ -160,10 +147,9 @@ export default function Messages({navigation,route}) {
             
         {/* chat component */} 
         <ChatComponent />
-        
-               { messages?.map((message)=>{
-                   <ChatComponent message={message} />
-               })}
+            { messages?.map((message)=>{
+                <ChatComponent message={message} />
+            })}
         </View>
     </ScrollView>
   );

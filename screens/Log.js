@@ -6,12 +6,13 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  TouchableOpacity,
-  
-} from 'react-native';
+  TouchableOpacity} from 'react-native';
+import { 
+  getAuth,
+  PhoneAuthProvider, 
+  signInWithCredential } from 'firebase/auth';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import { initializeApp, getApp } from 'firebase/app';
-import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import {app, db} from '../firebase'
 // problem , i get verification code but it wont work. 
 try {
@@ -34,7 +35,6 @@ export default function Log() {
   const [phoneNumber, setPhoneNumber] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-
   const firebaseConfig = app ? app.options : undefined;
   const [message, showMessage] = useState();
   const attemptInvisibleVerification = false;
@@ -42,7 +42,10 @@ export default function Log() {
 const auth = getAuth();
 
   return (
-    <View style={{ padding: 20, marginTop: 50 }}>
+    <View style={{
+            padding: 20,
+            marginTop: 50
+          }}>
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={app.options}
@@ -50,13 +53,16 @@ const auth = getAuth();
       />
       <Text style={{ marginTop: 20 }}>Enter phone number</Text>
       <TextInput
-        style={{ marginVertical: 10, fontSize: 17 }}
+        style={{ 
+          marginVertical: 10, 
+          fontSize: 17 
+        }}
         placeholder="+1 999 999 9999"
         autoFocus
         autoCompleteType="tel"
         keyboardType="phone-pad"
         textContentType="telephoneNumber"
-        onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+        onChangeText={ phoneNumber => setPhoneNumber(phoneNumber) }
       />
       <Button
         title="Send Verification Code"
@@ -66,7 +72,6 @@ const auth = getAuth();
           // FirebaseAuthApplicationVerifier interface and can be
           // passed directly to `verifyPhoneNumber`.
           try {
-              
             const phoneProvider = new PhoneAuthProvider(auth);
             // const verificationId = await phoneProvider.verifyPhoneNumber(
             //   phoneNumber,
@@ -85,7 +90,10 @@ const auth = getAuth();
       />
       <Text style={{ marginTop: 20 }}>Enter Verification code</Text>
       <TextInput
-        style={{ marginVertical: 10, fontSize: 17 }}
+        style={{ 
+          marginVertical: 10, 
+          fontSize: 17 
+        }}
         editable={!!verificationId}
         placeholder="123456"
         onChangeText={setVerificationCode}

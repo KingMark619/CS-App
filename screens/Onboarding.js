@@ -3,7 +3,6 @@ import { View, Text } from 'react-native'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Login from './Login';
 import SignUp from './SignUp';
-import { app } from '../firebase';
 
 //  Cgeck user status. if first time, show the screens, else show the login. 
 // if user is logged in show profile, name and personal info. 

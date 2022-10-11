@@ -10,9 +10,7 @@ import { DoctorList } from '../dummyData'
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import Constant from '../Constant';
 
-
 const screenWidth = Dimensions.get('window').width
-
 
 const AppointmentListCard = ({date, time, name, number,department}) => {
     return (
@@ -168,8 +166,8 @@ export default function Appointment({navigation}) {
         <ScrollView style={{
             paddingLeft:10, 
             paddingRight:10, 
-            backgroundColor:'white',
             paddingTop:60,
+            backgroundColor:'white',
             }}>
                 {/* header */}
                 <View style={{marginBottom:20}}>
@@ -179,11 +177,11 @@ export default function Appointment({navigation}) {
                 }}>Let's find your Doctor</Text>
                 <View style={{
                     alignSelf:'center',
-                    width:screenWidth*0.8,
                     flexDirection:'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginBottom:20
+                    marginBottom:20,
+                    width:screenWidth*0.8,
 
                 }}>
                     <Image
@@ -232,10 +230,10 @@ export default function Appointment({navigation}) {
                      height:50,
                      width:screenWidth * 0.8,
                      ...Constant.radius2,
-                     backgroundColor:'#f7f7f7',
                      padding:10,
                      flexDirection: 'row',
-                     justifyContent: 'space-between'
+                     justifyContent: 'space-between',
+                     backgroundColor:'#f7f7f7',
                 }}>
                     <Text style={{ color:'gray', alignSelf: 'center'}}>Search for doctors</Text>
                     <Feather name="search" size={24} color="#302f2c" />

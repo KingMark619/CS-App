@@ -1,12 +1,10 @@
 import { 
     View, 
     Text, 
-    Image,
     Alert,
     Modal,
     ScrollView,
     TouchableOpacity,
-    TouchableHighlight,
     Dimensions,
     StyleSheet
     } from 'react-native'
@@ -62,7 +60,6 @@ export default function Schedule({navigation}) {
 
     // popUp screen 
     const PopUp = ({})=> {
-
       return (
         <View style={{
           justifyContent: 'space-around',
@@ -143,11 +140,12 @@ export default function Schedule({navigation}) {
         paddingTop:50,
         backgroundColor:'white',
     }}>
-         <View style={{
-                position:'fixed',
-                top:0,
-                left:0,
-                zIndex:1000
+         <View 
+            style={{
+              position:'fixed',
+              top:0,
+              left:0,
+              zIndex:1000
             }}>
                 <View style={{
                     justifyContent: 'center', 
@@ -199,9 +197,9 @@ export default function Schedule({navigation}) {
       nextTitle=""
       todayBackgroundColor="#E7EFFD"
       todayTextStyle={{
-          fontWeight:'600',
-          color:'white',
-          fontSize:15,
+        fontWeight:'600',
+        color:'white',
+        fontSize:15,
       }}
       customDayHeaderStyles={()=>{
 
@@ -220,11 +218,11 @@ export default function Schedule({navigation}) {
         color:'black'
       }}
       monthTitleStyle={{
-          fontSize:22, 
-          fontWeight:'500'
+        fontSize:22, 
+        fontWeight:'500'
       }}
       yearTitleStyle={{
-        fontSize:1, 
+        fontSize:1,
         fontWeight:'600'
       }}
       textStyle={{
@@ -254,7 +252,7 @@ export default function Schedule({navigation}) {
       onPress={() => selectTime(index)}> 
       
        <View style={{ 
-        flex: 1, 
+        flex: 1,
         height:60,
         width:screenWidth * 0.35,
         backgroundColor: item.selected ?'lightblue':'white',
@@ -266,7 +264,7 @@ export default function Schedule({navigation}) {
         marginBottom:15
         }}>
           <Text style={{
-            color:'black', 
+            color:'black',
             fontSize: 15,
             fontWeight: '500'
           }}>{item.time} AM</Text>

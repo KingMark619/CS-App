@@ -3,12 +3,10 @@ import {
     View, 
     Text, 
     Image,
-    ScrollView,
     TextInput, 
     Dimensions, } from 'react-native'
 import Constant from '../Constant';
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
 import { getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 const screenWidth = Dimensions.get('window').width
 
@@ -39,11 +37,12 @@ export default function Infos(navigation) {
                     // have success animation 
                     go()
                   }).catch((error) => {
-                    // An error occurred
+                    // An error occurred, show errror to the user
                     console.log(error)
                   });
                 })
                 .catch((error) => {
+                    // An error occurred, show errror to the user
                   const errorMessage = error.message;
                   console.log(errorMessage)
                 });
@@ -81,9 +80,9 @@ export default function Infos(navigation) {
         height:'100%'
         }}>
         <Text style={{
-                ...Constant.h1,
-                marginBottom:20
-                }}>Tell us more</Text>
+            ...Constant.h1,
+            marginBottom:20
+            }}>Tell us more</Text>
       <View style={{
           justifyContent: 'center',
           alignItems: 'flex-start'
@@ -116,7 +115,8 @@ export default function Infos(navigation) {
                 style={{
                     width:60,
                     height:60,
-                    borderRadius: 50 }}
+                    borderRadius: 50 
+                }}
             />
             <Image
                 source={require('../assets/memoji.jpeg')}
@@ -124,7 +124,8 @@ export default function Infos(navigation) {
                 style={{
                     width:60,
                     height:60,
-                    borderRadius: 50 }}
+                    borderRadius: 50 
+                }}
             />
         </View>
         <TextInput
@@ -157,12 +158,12 @@ export default function Infos(navigation) {
                 bottom:0
             }}>
                 <View style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     backgroundColor:'#4368F6',
                     width:screenWidth * 0.35,
                     height:40, 
                     borderRadius:12,
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     }}>
                     <Text style={{
                         fontSize:15,

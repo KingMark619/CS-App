@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Constant from '../Constant'
+import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { 
     View, 
     Text, 
@@ -8,26 +9,26 @@ import {
     TextInput, 
     FlatList } from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import {getAuth} from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import HospitalCard from '../components/HospitalCard';
+import AppointmentCard from '../components/AppointmentCard';
 import { Article } from '../dummyData';
 import Photo from '../assets/memoji.jpeg'
-import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+
 
 const screenWidth = Dimensions.get('window').width
 
 export default function Home({navigation}) {
     const auth = getAuth();
-    
 
-    const [username, setUsername] = useState('Mark') // pull data from user
+    const [username, setUsername] = useState('Mark') // pull data from user and set default data
     const [photoURL, setPhotoURL] = useState('') 
     const [searchInput, setSearchInput] = useState('') // set search bar info
+        // check if user has logged in.
      useEffect(() =>{
         if (auth != null) {
             const user = auth?.currentUser
-            console.log(`user is: ${user}`)
-            console.log(user?.providerData)
+            // set username and profile image
             setUsername(user?.providerData[0].displayName)
             setPhotoURL(user?.providerData[0].photoURL)
         }
@@ -61,16 +62,16 @@ export default function Home({navigation}) {
         >
       
         <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor:'lightgray',
                 padding:10,
                 borderRadius:30,
                 marginBottom:10,
-                backgroundColor:'lightgray',
                 width:60,
                 height:60,
-                justifyContent: 'center',
-                alignItems: 'center'
             }}>
-            <FontAwesome5 name={item} size={30} color="#4368F6" />
+            <FontAwesome5 name={ item } size={30} color="#4368F6" />
         </View>
         <View>
             <Text style={{
@@ -79,66 +80,8 @@ export default function Home({navigation}) {
             }}>{item}</Text>
         </View>
         
-    </TouchableOpacity>
+        </TouchableOpacity>
       )
-
-    const AppointmentCard = () => {
-
-        return(
-            <TouchableOpacity style={{
-                 backgroundColor:'#4368F6',
-                 width:screenWidth*0.92,
-                 borderRadius:'12px',
-                 padding:12
-                 }}>
-                {/* first row */}
-                <View style={{
-                    flexDirection:'row',
-                    justifyContent:'flex-start',
-                    alignItems: 'center',
-                    marginBottom:20
-                }}>
-                    <Image
-                        source={{uri: 'https://placeimg.com/140/140/any'}}
-                        resizeMode='cover'
-                        style={{
-                            width:60,
-                            height:60,
-                            borderRadius:30,
-                            marginEnd:20
-                        }}
-                    />
-                    <View style={{
-                        flexDirection:'column',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start'
-                    }}>
-                        <Text style={Constant.h3}>Dr muhammed</Text>
-                        <Text style={{...Constant.h4, ...Constant.gray}}>Dental specialist</Text>
-                    </View>
-                </View>
-                {/* second row */}
-                <View style={{
-                    flexDirection:'row',
-                    justifyContent:'space-around',
-                    alignItems: 'center',
-                    padding: 10,
-                    paddingTop:20,
-                    paddingBottom:20,
-                    borderRadius:8,
-                    backgroundColor:'#99c9f0',
-                    marginBottom:5
-                }}>
-                    <AntDesign name="calendar" size={20} color="white" />
-                    <Text style={{...Constant.h4, 
-                        ...Constant.white}}>Monday, July 29</Text>
-                    <AntDesign name="clockcircleo" size={20} color="white" />
-                    <Text style={{...Constant.h4, 
-                        ...Constant.white}}>11:00 - 12:00 AM</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
 
      // Main view bellow
     return (

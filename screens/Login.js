@@ -6,10 +6,14 @@ import {
     Image, 
     TextInput, 
     Dimensions } from 'react-native'
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    FacebookAuthProvider, 
+    signInWithCredential} from "firebase/auth";
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { getAuth, signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup, signInWithCredential} from "firebase/auth";
 import * as Facebook from 'expo-facebook'
-import { Feather, Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -17,17 +21,16 @@ const screenHeight = Dimensions.get('window').height
 
 
 async function loginWithFacebook() {
+    // get facebook app id from the developer account.
     await Facebook.initializeAsync('<FACEBOOK_APP_ID>');
-  
+    
     const { type, token } = await Facebook.logInWithReadPermissionsAsync({
       permissions: ['public_profile'],
     });
-  
     if (type === 'success') {
       // Build Firebase credential with the Facebook access token.
       const facebookAuthProvider = new FacebookAuthProvider();
       const credential = facebookAuthProvider.credential(token);
-  
       // Sign in with credential from the Facebook user.
       signInWithCredential(auth, credential).catch(error => {
         // Handle Errors here.
@@ -36,7 +39,6 @@ async function loginWithFacebook() {
     }
   }
 
-// facebook login 
 
 export default function Login({navigation}) {
     // Set an initializing state whilst Firebase connects
@@ -61,17 +63,17 @@ export default function Login({navigation}) {
       }, []);
        
     const checkTextField = () => {
-            const auth = getAuth();
-            console.log("login launch")
-            if(email != '' && password != '') {
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                    // Signed in 
+        const auth = getAuth();
+        console.log("login launch")
+        if(email != '' && password != '') {
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                // Signed in 
                     const signedInUser = userCredential.user;
                     const userData = signedInUser?.providerData[0];
                     const uid = signedInUser?.uid;
-                        console.log(userData)
-                        alert('Login successful')
+                    console.log(userData)
+                    alert('Login successful')
                     // navigation.replace('Home',{email})
                     // ...
                 })
@@ -84,7 +86,6 @@ export default function Login({navigation}) {
             } else {
                 alert('Email or password incorrect')
             }
-        
     }
 
     return (
@@ -204,12 +205,12 @@ export default function Login({navigation}) {
                     position: 'relative',
                 }} >
                 <Text style={{
-                        fontSize:15,
-                        fontWeight: '300',
-                        color:"gray",
-                        textDecorationStyle:'solid',
-                        textDecorationLine:'underline'
-                        }}>New to this app? Sign Up</Text>
+                    fontSize:15,
+                    fontWeight: '300',
+                    color:"gray",
+                    textDecorationStyle:'solid',
+                    textDecorationLine:'underline'
+                    }}>New to this app? Sign Up</Text>
             </TouchableOpacity>
             {/* Sign up with social media */}
             {/* <View style={{

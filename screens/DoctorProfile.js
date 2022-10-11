@@ -115,16 +115,16 @@ export default function DoctorProfile({navigation}) {
         {/* Appointment */}
         <View>
             <TouchableOpacity onPress={()=>navigation.navigate('Schedule')} style={{
-                        borderRadius:8,
-                        backgroundColor: '#4368F6',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf:'center',
-                        height:40, 
-                        width:200,
-                    }}
-                    >
-                    <Text style={{...Constant.h4, color:'white'}}>Appointment</Text>
+                borderRadius:8,
+                backgroundColor: '#4368F6',
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf:'center',
+                height:40, 
+                width:200,
+            }}
+            >
+                <Text style={{...Constant.h4, color:'white'}}>Appointment</Text>
             </TouchableOpacity>
         </View>
     </ScrollView>
