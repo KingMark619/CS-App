@@ -1,10 +1,15 @@
 import React from 'react'
+import { TouchableOpacity, Dimensions, View, Image, Text } from 'react-native'
+const screenWidth = Dimensions.get('window').width
+import Constant from '../Constant';
+import { AntDesign} from '@expo/vector-icons'
+import { image1 } from '../dummyData';
 
 export default function AppointmentCard({profile, name, department, date, time}) {
   return (
     <TouchableOpacity style={{
-        backgroundColor:'#4368F6',
-        width:screenWidth*0.92,
+        backgroundColor:'#aaedbc',
+        width: screenWidth * 0.75,
         borderRadius:'12px',
         padding:12
         }}>
@@ -16,7 +21,7 @@ export default function AppointmentCard({profile, name, department, date, time})
            marginBottom:20
        }}>
            <Image
-               source={{uri: 'https://placeimg.com/140/140/any'}}
+               source={image1}
                resizeMode='cover'
                style={{
                    width:60,
@@ -27,31 +32,32 @@ export default function AppointmentCard({profile, name, department, date, time})
            />
            <View style={{
                flexDirection:'column',
-               justifyContent: 'space-between',
+               justifyContent: 'space-around',
                alignItems: 'flex-start'
            }}>
-               <Text style={Constant.h3}>{name ? name :'Dr Muhammed'}</Text>
-               <Text style={{...Constant.h4, ...Constant.gray}}>{department? department : 'General Medicine'}</Text>
+               <Text style={Constant.h3}>{name ? name :'Dr. Muhammed'}</Text>
+               <Text style={{...Constant.h4, color:'#5b5b5b', fontWeight:'300'}}>{department? department : 'General Medicine'}</Text>
            </View>
        </View>
        {/* second row */}
        <View style={{
            flexDirection:'row',
-           justifyContent:'space-around',
+           justifyContent:'start',
            alignItems: 'center',
-           backgroundColor:'#99c9f0',
+           backgroundColor:'#fff',
            padding: 10,
-           paddingTop:20,
-           paddingBottom:20,
-           borderRadius:8,
-           marginBottom:5
+           paddingTop:5,
+           paddingBottom:5,
+           borderRadius:12,
+           marginBottom:5,
+           width:'88%'
        }}>
-           <AntDesign name="calendar" size={20} color="white" />
+           <AntDesign name="clockcircleo" size={20} color="black" />
            <Text style={{...Constant.h4, 
-               ...Constant.white}}>{date ? date : 'Monday, July 29'}</Text>
-           <AntDesign name="clockcircleo" size={20} color="white" />
+               ...Constant.black, marginStart:5}}>{date ? date : 'Mon, July 29'}</Text>
+           
            <Text style={{...Constant.h4, 
-               ...Constant.white}}>{time ? time : '11:00 - 12:00 AM'}</Text>
+               ...Constant.black}}>{time ? time : ' at 09:25 - 09:45'}</Text>
        </View>
    </TouchableOpacity>
   )

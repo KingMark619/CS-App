@@ -34,8 +34,27 @@ export default StyleSheet.create({
     gray :{
         color:'#f5f2eb'
     },
+    black :{
+        color:'#1b1b1b',
+        fontWeight:'500'
+    },
     white:{ 
         color:'#fff'
+    },
+    bgBlue :{
+        color:'#afe7f2'
+    },
+    bgGreen :{
+        color:'#aaedbc'
+    },
+    bgOrange :{
+        color:'#ede1aa'
+    },
+    bgPurple :{
+        color:'#dbaaed'
+    },
+    bgYellow :{
+        color:'#e8edaa'
     },
     padding :{
         padding:15,
@@ -52,7 +71,10 @@ export default StyleSheet.create({
     border :{
         borderWidth:0.5,
         borderColor:'lightgray',
-
+    },
+    border2 : {
+        borderWidth: 1,
+        borderColor:'lightgray',
     },
     primaryColor :{
         color:'#4368F6'

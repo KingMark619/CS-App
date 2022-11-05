@@ -8,7 +8,7 @@ export default function HospitalCard({name, department, address,onPress}) {
   return (
     <TouchableOpacity style={{
         backgroundColor: 'white',
-        borderRadius:10,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: 'lightgray',
         width: '90%',

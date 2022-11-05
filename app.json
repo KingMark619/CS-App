@@ -20,7 +20,6 @@
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info-4.plist",
       "bundleIdentifier": "com.kingmark6.congosante"
-      
     },
     "android": {
       "adaptiveIcon": {
@@ -35,6 +34,7 @@
     },
     "plugins": [
       "@react-native-firebase/app"
-    ]
+    ],
+    "description": ""
   }
 }
