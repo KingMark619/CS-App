@@ -16,7 +16,7 @@ export default function DoctorProfile({navigation}) {
      Linking.openURL('tel:15527971013')
    }
   return (
-    <ScrollView style={{
+    <ScrollView showsVerticalScrollIndicator={false} style={{
         backgroundColor:'white',
         paddingTop:50,
         paddingLeft:15,

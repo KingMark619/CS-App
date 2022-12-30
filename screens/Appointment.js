@@ -5,10 +5,13 @@ import {
     Image,
     ScrollView,
     Dimensions, } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { DoctorList } from '../dummyData'
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import Constant from '../Constant';
+import AppointmentCard from '../components/AppointmentCard';
+import NearbyCard from '../components/NearbyCard';
+
 
 const screenWidth = Dimensions.get('window').width
 
@@ -95,85 +98,70 @@ export default function Appointment({navigation}) {
         Calendar()
     },[])
 
-    const DoctorCard = ({name, specialty, profile, emoji,id}) => {
+    const DoctorCard = ({item}) => {
         return(
-            <TouchableOpacity key={id} style={{
-                backgroundColor:'white',
-                height:120,
-                width:screenWidth*0.9,
-                ...Constant.border,
-                ...Constant.radius2,
-                paddingRight:20,
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-                ...Constant.margin
+    <TouchableOpacity style={{
+        marginLeft:10,
+        marginRight:10,
+        borderRadius:12,
+        borderWidth:3,
+        borderColor:'#fff',
+        width:120,
+        overflow:'hidden'}}>
+        <View style={{
+            
+            
+        }}>
+            <Image
+                source={{uri:item?.profile}}
+                resizeMode='cover'
+                style={{
+                    width:118,
+                    height:118,
+                    
                 }}
-                onPress={() => navigation.navigate('DoctorProfile')}
-                >
-                    {/* text */}
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        paddingTop:10,
-                    }}>
-                    <View style={{ 
-                        marginLeft:25, 
-                        flexDirection:'row',
-                        justifyContent: 'space-between',
-                        }}>
-                        <View>
-                            <Text style={{...Constant.h3}}>Dr {name}</Text>
-                            <Text style={{...Constant.h4, color:'gray'}}>{emoji} {specialty}</Text>
-                        </View>
-                    </View>  
-                    {/* picture */}
-                    <View>
-                    <Image 
-                        source={{uri:profile}}
-                        resizeMode='cover'
-                        style={{
-                            width:55,
-                            height:55,
-                            borderRadius:28
-                        }}
-                    />
-                    </View> 
-                    </View>
-                    {/* second row */}
-                    <View style={{
-                        flexDirection:'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        paddingBottom:10,
-                        paddingLeft:10,
-                    }}>
-                        <Text style={{...Constant.h4, color:'#FFD667'}}>Get in touch</Text>
-                        <TouchableOpacity style={{
-                            backgroundColor:'#f7f7f7',
-                            padding:8,
-                            ...Constant.radius2
-                        }}>
-                            <Text style={{...Constant.h4, alignSelf:'center'}}>Appointment</Text>
-                        </TouchableOpacity>
-                    </View>
-            </TouchableOpacity>
+            />
+        </View>
+        <View style={{
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop:10
+        }}>
+            <Text numberOfLines={1} style={{
+                fontWeight:'500',
+                fontSize:15,
+                letterSpacing:0.5,
+                
+            }}>{'Dr '}{item.name?item.name:'Doctor Steve'}</Text>
+            <Text style={{marginTop:10,fontWeight:'500', fontSize:15,letterSpacing:0.5, color:'gray'}}>{item.specialty?item.specialty:'Cardiologist'}</Text>
+        </View>
+    </TouchableOpacity>
         )
     }
 
     // main return bellow 
     return (
         <ScrollView style={{
-            paddingLeft:10, 
-            paddingRight:10, 
-            paddingTop:60,
+            
             backgroundColor:'white',
             }}>
                 {/* header */}
-                <View style={{marginBottom:20}}>
+                <View style={{
+                    paddingLeft:10, 
+                    paddingRight:10, 
+                    paddingTop:60,
+                    paddingBottom:10,
+                    marginBottom:20,
+                    width:'100%',
+                    backgroundColor:'#24478a',
+                    // borderBottomLeftRadius:25,
+                    // borderBottomRightRadius:25
+                }}>
                 <Text style={{
                 ...Constant.h1,
-                marginBottom:20
+                marginBottom:20,
+                color:'#fff'
                 }}>Let's find your Doctor</Text>
                 <View style={{
                     alignSelf:'center',
@@ -217,14 +205,11 @@ export default function Appointment({navigation}) {
                         }}
                     />
                 </View>
-                </View>
-            
-
-            {/* search doctors in your area */}
+                {/* search doctors in your area */}
             <View style={{
                 justifyContent: 'center',
                  alignItems: 'center',
-                 marginBottom:20}}>
+                 marginBottom:120 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('Search')} 
                     style={{
                      height:50,
@@ -239,21 +224,55 @@ export default function Appointment({navigation}) {
                     <Feather name="search" size={24} color="#302f2c" />
                 </TouchableOpacity>
             </View>
-            <View>
-                <Calendar/>
+                </View>
+            
+            {/* page start here */}
+            
+            <View style={{
+                justifyContent: 'center', 
+                alignItems: 'center',
+                marginTop:-80
+            }}>
+                <FlatList
+                    data={DoctorList}
+                    renderItem={DoctorCard}
+                    keyExtractor={item => item.id}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    snapToAlignment="start"
+                    decelerationRate="fast"
+                    snapToInterval={screenWidth}
+                />
+
+            </View>
+            <View style={{
+                ...Constant.padding,
+                ...Constant.margin,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+            }}>
+                <Text style={Constant.h2}>Upcoming </Text>
+                <Text style={{...Constant.h2, ...Constant.gray}}>{'>'}</Text>
+            </View>
+            <View style={{paddingStart:10}}>
+                {/* <Calendar/> */}
+                <AppointmentCard />
             </View>
             {/* Nearby doctors / hospitals */}
-            <Text style={{
-                ...Constant.h2,
-                ...Constant.margin
-                }}>Available <Text style={{fontSize:6,}}>🟢</Text></Text>
-            
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                {/* doctor card */}
-                    {DoctorList.map((doctor, index) =>DoctorCard(doctor,index))}
+            <View style={{
+                ...Constant.padding,
+                ...Constant.margin,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+            }}>
+                <Text style={Constant.h2}>Nearby Doctors </Text>
+                <Text style={{...Constant.h2, ...Constant.gray}}>{'>'}</Text>
             </View>
-            {/* margin due to bottom tab bar */}
-            <View style={{marginBottom:60}}></View>
+            <View style={{paddingStart:10}}>
+                <NearbyCard/>
+            </View>
+            {/* doctor card */}
+            
         </ScrollView>
     )
 }

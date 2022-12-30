@@ -8,7 +8,7 @@ import { image1 } from '../dummyData';
 export default function AppointmentCard({profile, name, department, date, time}) {
   return (
     <TouchableOpacity style={{
-        backgroundColor:'#aaedbc',
+        backgroundColor:'#63d8a9',
         width: screenWidth * 0.75,
         borderRadius:'12px',
         padding:12
@@ -20,6 +20,12 @@ export default function AppointmentCard({profile, name, department, date, time})
            alignItems: 'center',
            marginBottom:20
        }}>
+            <View style={{
+                width:60,
+                height:60,
+                borderRadius:60,
+                backgroundColor:'white'
+            }}>
            <Image
                source={image1}
                resizeMode='cover'
@@ -30,6 +36,7 @@ export default function AppointmentCard({profile, name, department, date, time})
                    marginEnd:20
                }}
            />
+           </View>
            <View style={{
                flexDirection:'column',
                justifyContent: 'space-around',

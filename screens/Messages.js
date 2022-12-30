@@ -138,8 +138,8 @@ export default function Messages({navigation,route}) {
                     <ChatProfile />
                     <ChatProfile />
                     
-                { messages.map((message)=>{
-                    <ChatProfile message={message}/>
+                { messages.map((message, index)=>{
+                    <ChatProfile key={index} message={message}/>
                 })}
                 </View>
             </ScrollView>
@@ -147,8 +147,8 @@ export default function Messages({navigation,route}) {
             
         {/* chat component */} 
         <ChatComponent />
-            { messages?.map((message)=>{
-                <ChatComponent message={message} />
+            { messages?.map((message, index)=>{
+                <ChatComponent key={index} message={message} />
             })}
         </View>
     </ScrollView>

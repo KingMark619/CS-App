@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Constant from '../Constant'
-import { FontAwesome5, AntDesign, EvilIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { 
+    FontAwesome5, 
+    AntDesign, 
+    EvilIcons, 
+    MaterialCommunityIcons } from '@expo/vector-icons';
 import { 
     View, 
     Text, 
@@ -13,10 +17,10 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { getAuth } from 'firebase/auth'
 import HospitalCard from '../components/HospitalCard';
 import AppointmentCard from '../components/AppointmentCard';
-import { Specialties, Article, image2 } from '../dummyData';
-import Photo from '../assets/memoji.jpeg'
+import { Specialties, Article, image2, image3, image4 } from '../dummyData';
 import { color } from 'react-native-reanimated';
-
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+// import GithubIcon from 'react-native-eva-icons/icons/Github';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -36,28 +40,99 @@ export default function Home({navigation}) {
         }
      },[])
 
-     const renderItem = ({ item }) => (
-        <View style={{
-            width:screenWidth*0.95,
-            height: screenWidth*0.2,
-            justifyContent: 'space-around',
+     const TestResult = ({name, desc, icon}) => {
+        return (
+        <TouchableOpacity style={{
+            width:screenWidth*0.9,
+            height: screenWidth*0.18,
+            borderRadius:18,
+            marginBottom:15,
+            backgroundColor:'#f5f5f5',
+            justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
         }}>
             <View style={{
                 flexDirection: 'row',
+                justifyContent:'space-between',
+                alignItems: 'center',
+                marginStart:12
+            }}>
+            <View style={{
+                width:60,
+                height:60,
+                borderRadius:18,
+                backgroundColor:'white',
+                justifyContent:'center',
+                alignItems: 'center',
+            }}>
+                <Text style={{fontSize:20}}>{icon?icon:'🩸'}</Text>
+            </View>
+            <View style={{
+                flexDirection:'column',
+                paddingLeft:10
+            }}>
+                <Text style={{fontWeight:'600', fontSize:15}}>{name?name:'Test Result'} </Text>
+                <Text style={{fontWeight:'600', fontSize:15}}>{desc?desc:''} </Text>
+            </View>
+            </View>
+            <View style={{
+                flexDirection:'row',
                 justifyContent:'space-evenly',
+                alignItems: 'center',
+                width:45,
+                height:45,
+                borderRadius:12,
+                backgroundColor:'white',
+                marginEnd:12
+            }}>
+                <Image
+                source={require('../assets/icons/right.png')}
+                resizeMode='cover'
+                style={{
+                    width: 25,
+                    height:25,
+                }}
+            />
+            </View>
+        </TouchableOpacity>)
+     }
+
+     const NearbyDoctors = ({ item }) => (
+        <View style={{
+            width:screenWidth*0.9,
+            height: screenWidth*0.18,
+            borderRadius:18,
+            marginEnd:12,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'row',
+            backgroundColor:'#f5f5f5'
+        }}>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent:'space-evenly',
+                alignItems: 'center',
+                paddingLeft:12,
+            }}>
+            <View style={{
+                width:60,
+                height:60,
+                borderRadius:12,
+                
+                backgroundColor:'white',
+                justifyContent: 'center',
                 alignItems: 'center',
             }}>
             <Image
-                source={image2}
+                source={image3}
                 resizeMode='cover'
                 style={{
-                    width: 60,
-                    height:60,
-                    borderRadius:60
+                    width: 30,
+                    height:30,
                 }}
             />
+            </View>
             <View style={{
                 flexDirection:'column',
                 paddingLeft:10
@@ -74,7 +149,8 @@ export default function Home({navigation}) {
                 height:'35%',
                 borderColor:'lightgray',
                 borderRadius:40,
-                backgroundColor:'#afe7f2'
+                backgroundColor:'#afe7f2',
+                marginEnd:12
                 
             }}>
                 <MaterialCommunityIcons name="radar" size={24} color="black" />
@@ -87,16 +163,31 @@ export default function Home({navigation}) {
       <TouchableOpacity>
             <View style={{
                 backgroundColor:item.color,
-                width: screenWidth * 0.3,
-                height: screenWidth * 0.3,
+                width: screenWidth * 0.32,
+                height: screenWidth * 0.38,
                 borderRadius: 12,
                 marginLeft:10,
                 marginEnd:10,
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
+                paddingLeft: 20,
+                justifyContent: 'space-around',
+                alignItems: 'flex-start',
                 
             }}>
-                <Image
+                <View style={{
+                    width:50,
+                    height:50,
+                    borderRadius:12,
+                    backgroundColor:'white'
+                    }}>
+                <View style={{
+                    width: 50,
+                    height: 50,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Text style={{fontSize:30}}>{item.emoji}</Text>
+                </View>
+                {/* <Image
                     source={item.icon}
                     resizeMode='center'
                     style={{
@@ -104,16 +195,26 @@ export default function Home({navigation}) {
                         height: 60,
                         borderRadius:50
                     }}
-                />
-                <Text style={{...Constant.h4, color: 'black'}}>{item.name?item.name:'error'}</Text>
+                /> */}
+                </View>
+                <View style={{ 
+                    marginTop:-10, 
+                    justifyContent: 'space-between', 
+                    flexDirection:'column',
+                    alignItems: 'flex-start'}}>
+                    <Text style={{...Constant.h4,fontWeight:'bold',fontSize:15, color: 'white'}}>{item.name?item.name:'error'}</Text>
+                    <Text style={{...Constant.h4, color: '#f5f5f5'}}>{item.amount?item.amount:'error'}{item?' Doctors':''}</Text>
+                </View>
+                
             </View>
         </TouchableOpacity>)
         
      // Main view bellow
     return (
-        <ScrollView style={{ 
+        <ScrollView showsVerticalScrollIndicator={false} style={{ 
             backgroundColor:'white',
            }}>
+            
             {/* username block */}
             <View style={{ 
                 flexDirection:'row',
@@ -127,7 +228,22 @@ export default function Home({navigation}) {
                 }}>
                 <View style={{
                     justifyContent: 'center', 
-                    flexDirection:'column',
+                    flexDirection:'row',
+                    }}>
+                        <View>
+                            <Image
+                                source={photoURL? {uri: photoURL} :require('../assets/doctor.png')}
+                                resizeMode='cover'
+                                style={{
+                                width:60,
+                                height:60,
+                                borderRadius: 50 }}
+                            />
+                        </View>
+                    <View style={{
+                        justifyContent: 'center',
+                        flexDirection:'column',
+                        marginStart:10
                     }}>
                     <View>
                         <Text style={{...Constant.h4, color:'gray'}}>Good Morning</Text>
@@ -139,17 +255,18 @@ export default function Home({navigation}) {
                         <Text style={Constant.h2}>{username?username:'King Mark'} </Text>
                         <Text style={Constant.h1}>{username}{username?',':''}</Text>
                     </View>
+                    </View>
+                    
                 </View>
-                <View>
+                <TouchableOpacity>
                     <Image
-                        source={photoURL? {uri: photoURL} :require('../assets/memoji.jpeg')}
+                        source={ require('../assets/icons/menu-2-outline.png')}
                         resizeMode='cover'
                         style={{
-                            width:60,
-                            height:60,
-                            borderRadius: 50 }}
+                            width:40,
+                            height:40, }}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
             {/* Search bar for symptoms */}
             <View style={{
@@ -181,6 +298,16 @@ export default function Home({navigation}) {
             </View>
 
             <View style={{
+                ...Constant.padding,
+                ...Constant.margin,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+            }}>
+                <Text style={Constant.h2}>Category</Text>
+                <Text style={{...Constant.h2, ...Constant.gray}}>{'>'}</Text>
+            </View>
+
+            <View style={{
                 flexDirection:'row',
                 justifyContent: 'space-around',
                 alignItems: 'center',
@@ -189,7 +316,7 @@ export default function Home({navigation}) {
                 <FlatList
                     data={Article}
                     renderItem={Icons}
-                    // keyExtractor={item => item.name}
+                    keyExtractor={item => item.id}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     snapToAlignment="start"
@@ -205,14 +332,21 @@ export default function Home({navigation}) {
                 flexDirection: 'row',
                 justifyContent: 'space-between'
             }}>
-                <Text style={Constant.h2}>My Appointment</Text>
+                <Text style={Constant.h2}>Your test result</Text>
                 <Text style={{...Constant.h2, ...Constant.gray}}>{'>'}</Text>
             </View>
             {/* Book appointment with doctor*/}
+            <TouchableOpacity onPress={()=>{navigation.replace('Onboarding')}}>
+                {/* <Text>Onboarding</Text> */}
+                
+            </TouchableOpacity>
             <View style={{
-                paddingLeft:10
+                paddingLeft:10,
+                justifyContent: 'center',
+                alignItems: 'center',
             }}>
-                <AppointmentCard />
+                <TestResult name={'General Blood'} desc={'Analysis'} icon={'🩸'} />
+                <TestResult name={'Antibody Test'} desc={'SARS-CoV-2'} icon={'🦠'} />
             </View>
             {/* Learn more / info blog */}
             <View style={{
@@ -232,17 +366,18 @@ export default function Home({navigation}) {
                 alignItems: 'center', 
                 paddingStart:5,
                 paddingEnd:5,
+                marginStart:10,
                 ...Constant.margin,
                 }}>
                 <FlatList
                     data={Article}
-                    renderItem={renderItem}
+                    renderItem={NearbyDoctors}
                     keyExtractor={item => item.title}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     snapToAlignment="start"
                     decelerationRate="fast"
-                    snapToInterval={screenWidth*0.95}
+                    snapToInterval={screenWidth*0.1}
                 />
             </View>
              {/* Nearby hospitals */}

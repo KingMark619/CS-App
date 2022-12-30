@@ -110,7 +110,7 @@ export default function Infos(navigation) {
             width:screenWidth * 0.8
         }}>
             <Image
-                source={require('../assets/memoji.jpeg')}
+                source={require('../assets/memojis/memoji.jpeg')}
                 resizeMode='cover'
                 style={{
                     width:60,
@@ -119,7 +119,7 @@ export default function Infos(navigation) {
                 }}
             />
             <Image
-                source={require('../assets/memoji.jpeg')}
+                source={require('../assets/memojis/memoji.jpeg')}
                 resizeMode='cover'
                 style={{
                     width:60,

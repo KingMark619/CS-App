@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useCallback} from 'react';
 import { StyleSheet,} from 'react-native';
 import store from './store/Store';
 import { Provider } from 'react-redux'
-
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -12,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Tabs from './components/Tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Test from './components/Onboarding';
 
 import {
   Home,
@@ -37,9 +39,26 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
+// SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   function Hom() {
     return (
+      <>
       <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -87,7 +106,8 @@ export default function App() {
             }}
           />
       </Tab.Navigator>
-    );
+      </>
+    )
   }
   return (
 
@@ -97,6 +117,7 @@ export default function App() {
         screenOptions={{
           headerShown: false
         }}>
+          <Stack.Screen name="Onboarding" component={Test}/>
           <Stack.Screen name="Home" component={Hom} />
           <Stack.Screen name="Appointment" component={Appointment} />
           <Stack.Screen name="Chat" component={Chat} />

@@ -7,37 +7,11 @@ export {image1, image2, image3, image4}
 // Doctor list 
 export const DoctorList = [
     {
-        id:1,
-        name:'Chris',
-        specialty: 'Pediatry',
-        emoji: '👼🏽',
-        profile:'https://placeimg.com/140/140/any',
-        available: false,
-        online: true,
-        address:'303 ave de leglise',
-        phone: '123756758',
-        email: 'chris@hospital.com',
-
-    },
-    {
-        id:2,
-        name:'John',
-        specialty: 'Surgery',
-        emoji: '🔪',
-        profile:'https://placeimg.com/140/140/any',
-        available: false,
-        online: false,
-        address:'495 church Ave',
-        phone: '36777-8737',
-        email: 'john@hospital.com',
-
-    },
-    {
         id:3,
-        name:'Mary',
+        name:'Mary Madelene',
         specialty: 'Cardiology',
         emoji: '🫀',
-        profile:'https://placeimg.com/140/140/any',
+        profile:'https://media.istockphoto.com/id/138205019/photo/happy-healthcare-practitioner.jpg?s=612x612&w=0&k=20&c=b8kUyVtmZeW8MeLHcDsJfqqF0XiFBjq6tgBQZC7G0f0=',
         available: false,
         online: false,
         address:'376 Xiong Ave',
@@ -46,10 +20,10 @@ export const DoctorList = [
 
     },{
         id:4,
-        name:'Jane',
+        name:'Steven K.',
         specialty: 'Generalist',
         emoji: '👩‍⚕️',
-        profile:'https://placeimg.com/140/140/any',
+        profile:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDUiXFuarEJUMRXt77SKGrmaTpN-dUQG7lj2T4II1Eqmb9pehb9vn9ZL0Ubz7BklGbfS8&usqp=CAU',
         available: false,
         online: true,
         address:'48 St Ave',
@@ -59,17 +33,43 @@ export const DoctorList = [
     },
     {
         id:5,
-        name:'Johnny Boy',
+        name:'Naomi Campbell',
         specialty: 'Pediatry',
         emoji: '👶',
-        profile:'https://placeimg.com/140/140/any',
+        profile:'https://www.careersportal.co.za/sites/default/files/styles/amp_1200x675_16_9/public/images/Terrique%20Faro/doctor.jpg?itok=82h2RXdD',
         available: false,
         online: true,
         address:'484 St Ave',
         phone: '2321-123-234',
         email: 'johnny@hospital.com',
 
-    }
+    },
+    {
+        id:1,
+        name:'Chris P.',
+        specialty: 'Pediatry',
+        emoji: '👼🏽',
+        profile:'https://www.pinnaclecare.com/wp-content/uploads/2017/12/bigstock-African-young-doctor-portrait-28825394.jpg',
+        available: false,
+        online: true,
+        address:'303 ave de leglise',
+        phone: '123756758',
+        email: 'chris@hospital.com',
+
+    },
+    {
+        id:2,
+        name:'John Stockton',
+        specialty: 'Surgery',
+        emoji: '🔪',
+        profile:'https://www.collinsdictionary.com/images/full/doctor_117169531.jpg',
+        available: false,
+        online: false,
+        address:'495 church Ave',
+        phone: '36777-8737',
+        email: 'john@hospital.com',
+
+    },
 ]
 
 export const Messages = [
@@ -126,73 +126,73 @@ export const Messages = [
 ]
 
 export const Article = [
-    // {
-    //     title:'Covid 19',
-    //     subtitle:'News about covid 19',
-    //     photos:[],
-    //     content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    // },
-    // {
-    //     title:'HPV',
-    //     subtitle:'Learn how to deal with HPV',
-    //     photos:[],
-    //     content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    // },
-    // {
-    //     title:'Menstrual cycle',
-    //     subtitle:'News about covid 19',
-    //     photos:[],
-    //     content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    // },
     {
         id:0,
-        name:'general',
-        color : '#afe7f2',
+        name:'General',
+        color : '#24478a',
+        amount: 30,
+        emoji:'🏥',
         icon: image1
     },
-    {
-        id:1,
-        name:'pediatry',
-        color:'#aaedbc',
-        icon: image2
-    },
+   
+    
     {
         id:2,
-        name:'pregnancy',
-        color:'#ede1aa',
+        name:'Pregnancy',
+        color:'#f4b463',
+        amount: 40,
+        emoji:'🤰🏽',
         icon: image3
     },
     {
         id:3,
-        name:'surgery',
-        color:'#dbaaed',
+        name:'Cardiology',
+        color:'#ee7a76',
+        amount: 35,
+        emoji:'🫀',
         icon: image4 
-    }  
+    },
+    {
+        id:4,
+        name:'Dentistry',
+        color:'#63d8a9',
+        amount: 45,
+        emoji:'🦷',
+        icon: image2
+    },
+    {
+        id:1,
+        name:'Pediatry',
+        color:'#d034eb',
+        amount: 45,
+        emoji:'🧒🏾',
+        icon: image2
+    },
     
 ]
 
 export const Specialities = [
     {
         id:0,
-        name:'general',
+        name:'General',
         color : '#afe7f2',
         icon: image1
     },
     {
         id:1,
-        name:'pediatry',
+        name:'Pediatry',
         color:'#aaedbc',
         icon: image2
     },
     {
         id:2,
-        name:'pregnancy',
+        name:'Pregnancy',
         color:'#ede1aa',
         icon: image3
     },
     {
         id:3,
-        name:'surgery',
+        name:'Surgery',
         color:'#dbaaed',
         icon: image4 
     }    

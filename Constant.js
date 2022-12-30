@@ -15,7 +15,7 @@ export default StyleSheet.create({
     },
     h4 :{
         fontSize:14,
-        fontWeight:'500',
+        fontWeight:'400',
         letterSpacing:0.5,
     },
     h5:{
@@ -29,10 +29,10 @@ export default StyleSheet.create({
         letterSpacing:0.5,
     },
     blue :{
-        color:'#4368F6'
+        color:'#24478A'
     },
     gray :{
-        color:'#f5f2eb'
+        color:'#f5f5f5'
     },
     black :{
         color:'#1b1b1b',
@@ -42,19 +42,22 @@ export default StyleSheet.create({
         color:'#fff'
     },
     bgBlue :{
-        color:'#afe7f2'
+        color:'#dfedfc'
     },
     bgGreen :{
-        color:'#aaedbc'
+        color:'#63d8a9'
     },
     bgOrange :{
         color:'#ede1aa'
     },
-    bgPurple :{
-        color:'#dbaaed'
+    bgRed :{
+        color:'#ee7a76'
     },
     bgYellow :{
-        color:'#e8edaa'
+        color:'#f4b463'
+    },
+    bgPurple: {
+        color:'#576df6'
     },
     padding :{
         padding:15,
