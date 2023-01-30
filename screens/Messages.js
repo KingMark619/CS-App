@@ -12,6 +12,8 @@ import { collection, getDocs } from 'firebase/firestore';
 
 import Constant from '../Constant';
 import SearchBar from '../components/SearchBar';
+import { DoctorList } from '../dummyData';
+import { FlatList } from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window')
 
@@ -38,8 +40,9 @@ export default function Messages({navigation,route}) {
           }        
       }    
 
-    const ChatComponent = ({message}) => {
+    const ChatComponent = ({item}) => {
         return (
+            <>
             <TouchableOpacity onPress={() => navigation.navigate('Chat')} style={{
                 flexDirection:'row',
                 justifyContent: 'space-between',
@@ -50,7 +53,7 @@ export default function Messages({navigation,route}) {
             }}>
                 {/* image block */}
                 <Image
-                    source={{uri: 'https://placeimg.com/140/140/any'}}
+                    source={{uri: item.profile}}
                     resizeMode="cover"
                     style={{
                         width:60,
@@ -61,16 +64,23 @@ export default function Messages({navigation,route}) {
                 />
                 {/* text and time block */}
                 <View style={{
-                    justifyContent: 'flex-start',
+                    justifyContent: 'space-between',
                     alignItems:'flex-start',
-                    flex:1
+                    flex:1,
+                    flexDirection:'column'
                 }}>
-                    <Text style={{
-                        ...Constant.h4
-                        }}>{message?.displayName? message.displayName: 'Doctor ZHupar'}</Text> 
-                    <Text style={{
-                        ...Constant.h4, color:'gray'
-                        }}>{message?.text?message.text:'text here hjedej dhejd'}</Text>
+                    <Text numberOfLines={1} style={{
+                        fontWeight:'500',
+                        fontSize:15,
+                        letterSpacing:0.5,
+                        }}>{item?.name? item.name: 'Doctor Mark'}</Text> 
+                    <Text numberOfLines={1} style={{
+                        fontWeight:'400',
+                        fontSize:15,
+                        letterSpacing:0.5,
+                        color:'gray',
+                        width:'90%'
+                        }}>{item?.text?item.text:'Please check in about your last appointment'}</Text>
                 </View>
                 {/* time */}
                 <View style={{
@@ -80,29 +90,59 @@ export default function Messages({navigation,route}) {
                 }}>
                     <Text style={{...Constant.h5, color:'gray'}}>10:23 AM</Text>
                 </View>
+               
             </TouchableOpacity>
+            <View style={{justifyContent:'center',alignItems:'center'}}>
+               <View style={{
+                    borderBottomColor:'#f5f5f5',
+                    borderWidth:0.3,
+                    width:'70%'
+                }}/> 
+            </View>
+             
+                </>
         )
     }
 
-    const ChatProfile = ({message}) => {
+    const ChatProfile = ({item}) => {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Chat')}
+                style={{
+                    flexDirection:'column',
+                    justifyContent:'space-between',
+                    alignItems:'center',
+                    marginEnd:20,
+                    width:80,
+                    overflow:'hidden'
+                }} 
+            >
+                <View>
                 <Image
-                    source={{uri: 'https://placeimg.com/140/140/any'}}
+                    source={{uri: item?.profile}}
                     resizeMode='cover'
                     style={{
                         width:60,
                         height:60,
                         borderRadius:30,
-                        marginEnd:20
+                        
                     }}
                 />
-                {/* display text if doctor online and available */}
-                <Text style={{
-                    fontSize:8,
-                    position:'absolute',
-                    right:25,
-                    }}>🟢</Text>
+               
+                </View>
+                <View style={{ 
+                    width:"100%",
+                    justifyContent:'center',
+                    alignItems:'center',
+                    paddingTop:10
+                }}>
+                    <Text numberOfLines={1} style={{
+                        fontWeight:'400',
+                        fontSize:15,
+                        letterSpacing:0.5,
+                        color:'white'
+                        }}>{item?.name? item.name: 'Dr Mark'}</Text>
+                </View>
+                
             </TouchableOpacity>
         )
     }
@@ -110,23 +150,31 @@ export default function Messages({navigation,route}) {
     // main return
   return (
     <ScrollView style={{
-        paddingLeft:10, 
-        paddingRight:10, 
+     
         backgroundColor:'white',
-        paddingTop:60,}}>
-        <View>
+        }}>
+        <View style={{
+            paddingLeft:10,
+            paddingRight:10, 
+            paddingTop:60,
+            paddingBottom:10,
+            marginBottom:20,
+            width:'100%',
+            backgroundColor:'#24478a',
+        }}>
             <Text style={{
                 ...Constant.h1,
-                marginBottom:20
-                }}>Get in touch</Text>
+                marginBottom:20,
+                color:'white',
+                }}>Chats</Text>
             {/* input text field */}
             <SearchBar navigation={navigation}/>
             {/* recent chat heads */}
-            <ScrollView 
-                horizontal={true}
+            <View
                 style={{
                     marginTop:25,
                     marginBottom:40,
+                    paddingLeft:15
                 }}> 
                 {/* scroll profile pics  */}
                 <View style={{
@@ -134,23 +182,36 @@ export default function Messages({navigation,route}) {
                     justifyContent: 'space-between',
                     alignItems:'center'
                 }}>
-                    <ChatProfile />
-                    <ChatProfile />
-                    <ChatProfile />
-                    
-                { messages.map((message, index)=>{
-                    <ChatProfile key={index} message={message}/>
-                })}
+                   <FlatList
+                        data={DoctorList}
+                        renderItem={ChatProfile}
+                        keyExtractor={item => item.id}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        snapToAlignment="start"
+                        decelerationRate="fast"
+                        snapToInterval={width}
+                   />
                 </View>
-            </ScrollView>
+            </View>
             {/* hide in case there are messages */}
-            
-        {/* chat component */} 
-        <ChatComponent />
-            { messages?.map((message, index)=>{
-                <ChatComponent key={index} message={message} />
-            })}
         </View>
+        {/* chat component */} 
+            <View>
+                    <FlatList
+                        data={DoctorList}
+                        renderItem={ChatComponent}
+                        keyExtractor={item => item.id}
+                        vertical
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        snapToAlignment="start"
+                        decelerationRate="fast"
+                        snapToInterval={width}
+                   />
+            
+            </View>
     </ScrollView>
   );
 }

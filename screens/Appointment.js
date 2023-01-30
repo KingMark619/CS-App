@@ -143,7 +143,6 @@ export default function Appointment({navigation}) {
     // main return bellow 
     return (
         <ScrollView style={{
-            
             backgroundColor:'white',
             }}>
                 {/* header */}

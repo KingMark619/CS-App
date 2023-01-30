@@ -17,7 +17,7 @@ export const DoctorList = [
         address:'376 Xiong Ave',
         phone: '2384-84-884',
         email: 'mary@hospital.com',
-
+        text:'Please check in for test results'
     },{
         id:4,
         name:'Steven K.',
@@ -29,7 +29,7 @@ export const DoctorList = [
         address:'48 St Ave',
         phone: '2347-9424-42',
         email: 'jane@hospital.com',
-
+        text:'Get back to me when you can for test results'
     },
     {
         id:5,
@@ -42,7 +42,7 @@ export const DoctorList = [
         address:'484 St Ave',
         phone: '2321-123-234',
         email: 'johnny@hospital.com',
-
+        text:'I am waiting for your test results'
     },
     {
         id:1,
@@ -55,7 +55,7 @@ export const DoctorList = [
         address:'303 ave de leglise',
         phone: '123756758',
         email: 'chris@hospital.com',
-
+        text:'Will schedule a call to discuss results'
     },
     {
         id:2,
@@ -68,7 +68,7 @@ export const DoctorList = [
         address:'495 church Ave',
         phone: '36777-8737',
         email: 'john@hospital.com',
-
+        text:'Come in next Tuesday results'
     },
 ]
 
